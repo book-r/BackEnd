@@ -1,0 +1,9 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend for the Lambda Bookr build week project",
+  "main": "index.js",
+  "repository": "git@github.com:book-r/BackEnd.git",
+  "author": "Henry Blevins <heblevi@gmail.com>",
+  "license": "MIT"
+}
