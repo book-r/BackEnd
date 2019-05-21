@@ -1,5 +1,195 @@
 [
   {
+    "type": "delete",
+    "url": "authors/:id",
+    "title": "Delete author by id",
+    "name": "DeleteAuthor",
+    "group": "Authors",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 204 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/authors.js",
+    "groupTitle": "Authors"
+  },
+  {
+    "type": "get",
+    "url": "authors/:id",
+    "title": "Get author by id",
+    "name": "GetAuthor",
+    "group": "Authors",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "books",
+            "description": "<p>an array of book objects written by the author</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'John R. Taylor',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     year: 2005,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/authors.js",
+    "groupTitle": "Authors"
+  },
+  {
+    "type": "get",
+    "url": "authors/",
+    "title": "Get authors",
+    "name": "GetAuthors",
+    "group": "Authors",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n[{id: 1, name: \"John R. Taylor\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/authors.js",
+    "groupTitle": "Authors"
+  },
+  {
+    "type": "put",
+    "url": "authors/:id",
+    "title": "Update author by id",
+    "name": "UpdateAuthor",
+    "group": "Authors",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'New Name'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/authors.js",
+    "groupTitle": "Authors"
+  },
+  {
     "type": "get",
     "url": "books/:id",
     "title": "Delete book",

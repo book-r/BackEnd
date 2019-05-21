@@ -7,7 +7,8 @@ module.exports = {
   get,
   insert,
   update,
-  remove
+  remove,
+  withAuthor
 };
 
 function get(id) {
@@ -54,4 +55,13 @@ function update(id, changes) {
 
 function remove(id) {
   return db('books').where({id}).del();
+}
+
+function withAuthor(author_id) {
+  return get()
+    .with('ba', qb => {
+      qb.select('book_id', 'author_id').from('books_authors');
+    })
+    .join('ba', 'ba.book_id', 'books.id')
+    .where({author_id});
 }
