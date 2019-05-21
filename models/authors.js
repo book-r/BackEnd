@@ -33,5 +33,5 @@ function update(id, changes) {
 }
 
 function remove(id) {
-  return db('authors').where({id}).delete();
+  return db('authors').where({id}).del();
 }
