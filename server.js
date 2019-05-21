@@ -15,4 +15,7 @@ server.use('/api/books', booksRoutes);
 server.use('/api/authors', authorsRoutes);
 server.use('/api/reviews', reviewsRoutes);
 
+server.use('/api/', express.static('docs'));
+server.use('/', express.static('docs'));
+
 module.exports = server;

@@ -10,7 +10,8 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "test": "cross-env DB_ENV=testing jest --watch --verbose",
-    "frontend": "knex migrate:rollback && knex migrate:latest && knex seed:run && node index.js"
+    "frontend": "knex migrate:rollback && knex migrate:latest && knex seed:run && node index.js",
+    "docs": "npx apidoc -f .js -i ./routes -o docs/ -e node_modules/"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -22,6 +23,7 @@
     "sqlite3": "^4.0.8"
   },
   "devDependencies": {
+    "apidoc": "^0.17.7",
     "jest": "^24.8.0",
     "nodemon": "^1.19.0",
     "supertest": "^4.0.2"
