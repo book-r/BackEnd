@@ -43,6 +43,12 @@ describe('books model', () => {
                          name: "John R. Taylor",
                        },
                      ],
+                     subjects: [
+                       {
+                         id: 1,
+                         name: "Physics",
+                       },
+                     ],
                      reviews:
                      [ { id: 1,
                          rating: 5,

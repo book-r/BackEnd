@@ -54,6 +54,12 @@ describe('books /api/books', () => {
                          name: "John R. Taylor",
                        },
                      ],
+                     subjects: [
+                       {
+                         id: 1,
+                         name: "Physics",
+                       },
+                     ],
                      publisher: 'University Science Books',
                      reviews:
                      [ { id: 1,
