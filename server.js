@@ -8,9 +8,11 @@ server.use(cors());
 server.use(helmet());
 
 const booksRoutes = require('./routes/books.js'),
-      authorsRoutes = require('./routes/authors.js');
+      authorsRoutes = require('./routes/authors.js'),
+      reviewsRoutes = require('./routes/reviews.js');
 
 server.use('/api/books', booksRoutes);
 server.use('/api/authors', authorsRoutes);
+server.use('/api/reviews', reviewsRoutes);
 
 module.exports = server;
