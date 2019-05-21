@@ -83,15 +83,6 @@ describe('books model', () => {
                       year: 2004,
                       publisher_id: 1,
                     };
-    const newBook2 = { title: 'Quantum Mechanics 2',
-                      isbn: '97801311189282',
-                      cover_url: 'http://covers.openlibrary.org/b/isbn/9780131118928-L.jpg',
-                      description:
-                      'A very good book for undergraduate quantum mechanics. What the.',
-                      edition: '2',
-                      year: 2004,
-                      publisher_id: 1,
-                    };
     it('returns new book', async () => {
       const book = await Books.insert(newBook);
       const expectedBook = { ...newBook,

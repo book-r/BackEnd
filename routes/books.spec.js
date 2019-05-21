@@ -4,9 +4,15 @@ const request = require('supertest'),
 
 describe('books /api/books', () => {
   beforeEach(done => db.migrate.rollback()
-             .then(() => db.migrate.latest())
-             .then(() => db.seed.run())
-             .then(() => done()));
+             .then(() => {
+               db.migrate.latest()
+                 .then(() => {
+                   db.seed.run()
+                     .then(() => {
+                       done();
+                     });
+                 });
+             }));
   describe('get', () => {
     it('success', async () => {
       const {status} = await request(server).get('/api/books');
@@ -81,6 +87,36 @@ describe('books /api/books', () => {
     it('failure', async () => {
       const {status} = await request(server).get('/api/books/1231231');
       expect(status).toBe(404);
+    });
+  });
+
+  describe('post', () => {
+    const newBook = { id: 2,
+                      title: 'Quantum Mechanics',
+                      isbn: '9780131118928',
+                      cover_url: 'http://covers.openlibrary.org/b/isbn/9780131118928-L.jpg',
+                      description:
+                      'A very good book for undergraduate quantum mechanics. What the.',
+                      edition: '2',
+                      year: 2004,
+                      publisher_id: 1,
+                    };
+    it('success', async () => {
+      const {status} = await request(server).post('/api/books/').send(newBook);
+      expect(status).toBe(201);
+    });
+    it('returns new book', async () => {
+      const {body} = await request(server).post('/api/books/').send(newBook);
+      const expectedBook = { ...newBook,
+                             id: 2,
+                             publisher: "University Science Books",
+                             created_at: null,
+                             updated_at: null,
+                             authors: [],
+                             reviews: [],
+                             subjects: []
+                           };
+      expect(body).toEqual(expectedBook);
     });
   });
 });
