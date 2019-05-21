@@ -5,7 +5,9 @@ const db = require('../data/dbConfig.js'),
 
 module.exports = {
   get,
-  insert
+  insert,
+  update,
+  remove
 };
 
 function get(id) {
@@ -44,4 +46,12 @@ function insert(book) {
   return db('books')
     .insert(book, 'id')
     .then(([id]) => get(id));
+}
+
+function update(id, changes) {
+  return db('books').where({id}).update(changes).then(updated => updated ? get(id) : null);
+}
+
+function remove(id) {
+  return db('books').where({id}).del();
 }

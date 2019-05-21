@@ -81,6 +81,28 @@ router.post('/', (req, res) => {
 });
 
 
+/**
+   @api {get} reviews/:id Request review by id
+   @apiName GetReview
+   @apiGroup Reviews
+
+   @apiParam {Number} id review id
+   
+   @apiSuccess {Object} review an updated review object
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   { id: 1,
+     rating: 5,
+     comment: 'Good book!',
+     book_id: 1,
+     title: 'Classical Mechanics',
+     user_id: 1,
+     username: 'henry'
+   }
+*/
+
+
 router.get('/:id', (req, res) => {
   const {id} = req.params;
   Reviews.get(id)
@@ -94,6 +116,33 @@ router.get('/:id', (req, res) => {
       error: error.toString()
     }));
 });
+
+
+/**
+   @api {put} reviews/:id Update review by id
+   @apiName UpdateReview
+   @apiGroup Reviews
+   
+   
+   @apiParam {Number} id review id
+   
+   @apiParamExample Example request body:
+   { rating: 0.5,
+     comment: 'It is not very good',
+     book_id: 1,
+     user_id: 2 }
+
+   @apiSuccess {Object} review a review object
+
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   { id: 5
+     rating: 0.5,
+     comment: 'It is not very good',
+     book_id: 1,
+     user_id: 2 }
+*/
+
 
 router.put('/:id', (req, res) => {
   const {id} = req.params,
@@ -119,6 +168,18 @@ router.put('/:id', (req, res) => {
     });
   }
 });
+
+/**
+   @api {delete} reviews/:id Delete review by id
+   @apiName DeleteReview
+   @apiGroup Reviews
+   
+   
+   @apiParam {Number} id review id
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 204 OK
+*/
 
 router.delete('/:id', (req, res) => {
   const {id} = req.params;

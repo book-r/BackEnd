@@ -2,6 +2,38 @@ define({ "api": [
   {
     "type": "get",
     "url": "books/:id",
+    "title": "Delete book",
+    "name": "DeleteBook",
+    "group": "Books",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>book id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 204 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/books.js",
+    "groupTitle": "Books"
+  },
+  {
+    "type": "get",
+    "url": "books/:id",
     "title": "Request book by id",
     "name": "GetBook",
     "group": "Books",
@@ -151,6 +183,420 @@ define({ "api": [
   },
   {
     "type": "get",
+    "url": "books/:id",
+    "title": "Add book",
+    "name": "PostBook",
+    "group": "Books",
+    "description": "<p>Note that this endpoint does not allow for adding authors or subjects to the book. This must be done on the sub endpoints. If there is time, endpoint will gain the functionality.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>book title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "isbn",
+            "description": "<p>isbn 13 string with no formatting</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cover_url",
+            "description": "<p>a url to a large book cover</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>book description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "edition",
+            "description": "<p>book edition</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "year",
+            "description": "<p>year published</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "publisher_id",
+            "description": "<p>publisher id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  edition: '1',\n  year: 2005,\n  publisher_id: 1,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>book id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>book title</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "isbn",
+            "description": "<p>isbn 13 string with no formatting</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "cover_url",
+            "description": "<p>a url to a large book cover</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>book description</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "average",
+            "description": "<p>The average rating of the book. Null if there are no ratings.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "edition",
+            "description": "<p>book edition</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "year",
+            "description": "<p>year published</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "publisher_id",
+            "description": "<p>publisher id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "publisher",
+            "description": "<p>publisher name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "authors",
+            "description": "<p>array of author objects</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "reviews",
+            "description": "<p>array of review objects</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/books.js",
+    "groupTitle": "Books"
+  },
+  {
+    "type": "get",
+    "url": "books/:id",
+    "title": "Update book",
+    "name": "UpdateBook",
+    "group": "Books",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>book title</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "isbn",
+            "description": "<p>isbn 13 string with no formatting</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "cover_url",
+            "description": "<p>a url to a large book cover</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>book description</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "edition",
+            "description": "<p>book edition</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "year",
+            "description": "<p>year published</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "publisher_id",
+            "description": "<p>publisher id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ title: 'Classical Mechanics Part 2',\n  isbn: '9999999999999',\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>book id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "title",
+            "description": "<p>book title</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "isbn",
+            "description": "<p>isbn 13 string with no formatting</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "cover_url",
+            "description": "<p>a url to a large book cover</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "description",
+            "description": "<p>book description</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "average",
+            "description": "<p>The average rating of the book. Null if there are no ratings.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "edition",
+            "description": "<p>book edition</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "year",
+            "description": "<p>year published</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "publisher_id",
+            "description": "<p>publisher id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "publisher",
+            "description": "<p>publisher name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "authors",
+            "description": "<p>array of author objects</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "reviews",
+            "description": "<p>array of review objects</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics Part 2',\n  isbn: '9999999999999',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/books.js",
+    "groupTitle": "Books"
+  },
+  {
+    "type": "delete",
+    "url": "reviews/:id",
+    "title": "Delete review by id",
+    "name": "DeleteReview",
+    "group": "Reviews",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>review id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 204 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/reviews.js",
+    "groupTitle": "Reviews"
+  },
+  {
+    "type": "get",
+    "url": "reviews/:id",
+    "title": "Request review by id",
+    "name": "GetReview",
+    "group": "Reviews",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>review id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "review",
+            "description": "<p>an updated review object</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  rating: 5,\n  comment: 'Good book!',\n  book_id: 1,\n  title: 'Classical Mechanics',\n  user_id: 1,\n  username: 'henry'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/reviews.js",
+    "groupTitle": "Reviews"
+  },
+  {
+    "type": "get",
     "url": "reviews/?user_id={:user_id}",
     "title": "Request reviews",
     "name": "GetReviews",
@@ -256,6 +702,56 @@ define({ "api": [
         {
           "title": "Success-reponse:",
           "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 4.6,\n  comment: 'It was pretty good',\n  book_id: 1,\n  user_id: 2 }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/reviews.js",
+    "groupTitle": "Reviews"
+  },
+  {
+    "type": "put",
+    "url": "reviews/:id",
+    "title": "Update review by id",
+    "name": "UpdateReview",
+    "group": "Reviews",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>review id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example request body:",
+          "content": "{ rating: 0.5,\n  comment: 'It is not very good',\n  book_id: 1,\n  user_id: 2 }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "review",
+            "description": "<p>a review object</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 0.5,\n  comment: 'It is not very good',\n  book_id: 1,\n  user_id: 2 }",
           "type": "json"
         }
       ]
