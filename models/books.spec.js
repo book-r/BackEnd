@@ -37,6 +37,12 @@ describe('books model', () => {
                      created_at: null,
                      updated_at: null,
                      publisher: 'University Science Books',
+                     authors: [
+                       {
+                         id: 1,
+                         name: "John R. Taylor",
+                       },
+                     ],
                      reviews:
                      [ { id: 1,
                          rating: 5,
