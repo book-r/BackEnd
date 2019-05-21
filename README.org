@@ -1,0 +1,20 @@
+* book-r Backend
+  This the backend server for the Lambda School book-r build week project.
+
+** API Documentation
+   Coming soon
+   
+** How to run locally
+   To run the server locally
+
+   #+begin_src sh
+     yarn frontend
+   #+end_src
+   
+   This will reset the development database and fill it with seed data, as well
+   as launch the server on port 3500. Note that this will discard any existing
+   data.
+   
+   To set the server to a different port, set the environment variable ~ENV~ to
+   the desired number. This can be done using your operating systems method of
+   choice, or by using a ~.env~ file in the project's root.
