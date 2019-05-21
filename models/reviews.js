@@ -37,7 +37,7 @@ function insert(review) {
 }
 
 function update(id, changes) {
-  return db('authors').where({id}).update(changes).then(updated => updated ? get(id) : null);
+  return db('reviews').where({id}).update(changes).then(updated => updated ? get(id) : null);
 }
 
 function remove(id) {
