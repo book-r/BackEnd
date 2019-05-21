@@ -16,5 +16,6 @@ function getBy(whereObj) {
       qb.select('id', 'username').from('users')
     })
     .join('b', 'b.id', 'reviews.book_id')
-    .join('u', 'u.id', 'reviews.user_id');
+    .join('u', 'u.id', 'reviews.user_id')
+    .where(whereObj);
 }

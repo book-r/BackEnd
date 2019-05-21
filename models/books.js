@@ -5,10 +5,15 @@ const db = require('../data/dbConfig.js'),
 
 module.exports = {
   get,
+  insert
 };
 
 function get(id) {
-  const query = db('books').join('publishers', 'publishers.id', 'books.publisher_id');
+  const query = db('books')
+        .with('p', qb => {
+          qb.select('publisher', 'id as publisher_id').from('publishers');
+        })
+        .join('p', 'p.publisher_id', 'books.publisher_id');
   if (id) {
     return Promise.all([
       query.where({'books.id': id}).first(),
@@ -26,4 +31,10 @@ function get(id) {
   } else {
     return query;
   }
+}
+
+function insert(book) {
+  return db('books')
+    .insert(book, 'id')
+    .then(([id]) => get(id));
 }
