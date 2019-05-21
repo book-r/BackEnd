@@ -53,7 +53,7 @@ describe('books /api/authors', () => {
       expect(body).toEqual({...newAuthor, id: 1});
     });
   });
-  describe.only('delete /:id', () => {
+  describe('delete /:id', () => {
     const newAuthor = {name: 'Henry Blevins'};
     it('failure has books', async () => {
       const {status} = await request(server).delete('/api/authors/1');

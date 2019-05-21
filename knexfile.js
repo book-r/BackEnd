@@ -22,7 +22,7 @@ module.exports = {
     client: 'sqlite3',
     useNullAsDefault: true,
     connection: {
-      filename: './data/testing.sqlite3'
+      filename: ':memory:'
     },
     pool: {
       afterCreate: (conn, done) => {
