@@ -3,6 +3,28 @@ const express = require('express'),
 
 const router = express.Router();
 
+/**
+   @api {get} reviews/?user_id={:user_id} Request reviews
+   @apiName GetReviews
+   @apiGroup Reviews
+   
+   @apiParam {Number} user_id An optional user id to get all reviews belonging to that user
+   
+   @apiSuccess {Array} reviews an array of review objects
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   [{ id: 1,
+      rating: 5,
+      comment: 'Good book!',
+      book_id: 1,
+      title: 'Classical Mechanics',
+      user_id: 1,
+      username: 'henry'
+   }]
+*/
+
+
 router.get('/', (req, res) => {
   const {user_id} = req.query;
   Reviews.getBy(user_id ? {user_id} : {})
@@ -12,6 +34,35 @@ router.get('/', (req, res) => {
       error: error.toString()
     }));
 });
+
+
+/**
+   @api {post} reviews/ Post review
+   @apiName PostReview
+   @apiGroup Reviews
+   
+   @apiParam {Number{0.0-5.0}} rating a floating point number between 0 and 5
+   @apiParam {String} comment optional comment string
+   @apiParam {Number} book_id book id
+   @apiParam {Number} user_id id of user posting. Will be removed after auth is implemented.
+   
+   @apiParamExample Example request body:
+   { rating: 4.6,
+     comment: 'It was pretty good',
+     book_id: 1,
+     user_id: 2 }
+
+   @apiSuccess {Number} id comment id
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   { id: 5
+     rating: 4.6,
+     comment: 'It was pretty good',
+     book_id: 1,
+     user_id: 2 }
+   
+*/
 
 router.post('/', (req, res) => {
   const review = req.body;
@@ -28,6 +79,7 @@ router.post('/', (req, res) => {
     });
   }
 });
+
 
 router.get('/:id', (req, res) => {
   const {id} = req.params;
