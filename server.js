@@ -7,4 +7,8 @@ server.use(express.json());
 server.use(cors());
 server.use(helmet());
 
+const booksRoutes = require('./routes/books.js');
+
+server.use('/api/books', booksRoutes);
+
 module.exports = server;
