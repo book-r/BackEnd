@@ -26,6 +26,7 @@ describe('books /api/books', () => {
                        cover_url: 'https://www.uscibooks.com/taycm.jpg',
                        description:
                        'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
+                       average: 4.25,
                        edition: '1',
                        year: 2005,
                        publisher_id: 1,
@@ -49,6 +50,7 @@ describe('books /api/books', () => {
                      cover_url: 'https://www.uscibooks.com/taycm.jpg',
                      description:
                      'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
+                     average: 4.25,
                      edition: '1',
                      year: 2005,
                      publisher_id: 1,
@@ -110,6 +112,7 @@ describe('books /api/books', () => {
       const expectedBook = { ...newBook,
                              id: 2,
                              publisher: "University Science Books",
+                             average: null,
                              created_at: null,
                              updated_at: null,
                              authors: [],

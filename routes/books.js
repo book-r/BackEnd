@@ -3,6 +3,29 @@ const express = require('express'),
 
 const router = express.Router();
 
+/**
+   @api {get} books Request books
+   @apiName GetBooks
+   @apiGroup Books
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   [ { 
+     id: 1,
+     title: 'Classical Mechanics',
+     isbn: '9781891389221',
+     cover_url: 'https://www.uscibooks.com/taycm.jpg',
+     description:
+     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
+     edition: '1',
+     year: 2005,
+     publisher_id: 1,
+     created_at: null,
+     updated_at: null,
+     publisher: 'University Science Books' 
+   } ]
+*/
+
 router.get('/', (req, res) => {
   Books.get()
     .then(books => res.status(200).json(books))
