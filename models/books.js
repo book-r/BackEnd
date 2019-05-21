@@ -12,7 +12,7 @@ function get(id) {
       query.where({'books.id': id}).first(),
       Reviews.getBy({'book_id': id})
     ]).then(([book, reviews]) => {
-      book.reviews = reviews;
+      book && (book.reviews = reviews);
       return book;
     });
     return 

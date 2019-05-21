@@ -52,7 +52,6 @@ describe('books model', () => {
                          user_id: 2,
                          title: 'Classical Mechanics',
                          username: 'blevins' } ] };
-      console.log(book);
       expect(book).toEqual(seed);
     });
   });
