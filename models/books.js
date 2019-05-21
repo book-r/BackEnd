@@ -10,10 +10,17 @@ module.exports = {
 
 function get(id) {
   const query = db('books')
+        .select(['id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'publisher'])
         .with('p', qb => {
           qb.select('publisher', 'id as publisher_id').from('publishers');
         })
-        .join('p', 'p.publisher_id', 'books.publisher_id');
+        .with('r', qb => {
+          qb.select('rating', 'book_id').from('reviews');
+        })
+        .join('p', 'p.publisher_id', 'books.publisher_id')
+        .leftJoin('r', 'r.book_id', 'books.id')
+        .avg({average: 'rating'})
+        .groupBy('id');
   if (id) {
     return Promise.all([
       query.where({'books.id': id}).first(),

@@ -1,0 +1,7 @@
+{
+  "name": "Lambda book-r",
+  "version": "0.1.0",
+  "description": "apiDocs for Lambda book-r backend",
+  "title": "Lambda book-r",
+  "url" : "https://lambda-bookr.heroku.com/api/"
+}
