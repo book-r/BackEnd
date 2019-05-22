@@ -1,7 +1,10 @@
 const request = require('supertest'),
       server = require('../server.js'),
       db = require('../data/dbConfig.js'),
-      prepBeforeEach = require('../helpers/prepBeforeEach.js');
+      prepBeforeEach = require('../helpers/prepBeforeEach.js'),
+      restricted = require('../middleware/restricted.js');
+
+jest.mock('../middleware/restricted.js');
 
 describe('reviews /api/reviews', () => {
   beforeEach(done => prepBeforeEach(done));

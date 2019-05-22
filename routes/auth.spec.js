@@ -3,7 +3,12 @@ const request = require('supertest'),
       db = require('../data/dbConfig.js'),
       jwt = require('jsonwebtoken'),
       secrets = require('../secrets.js'),
-      prepBeforeEach = require('../helpers/prepBeforeEach.js');
+      prepBeforeEach = require('../helpers/prepBeforeEach.js'),
+      restricted = require('../middleware/restricted.js');
+
+// jest.mock('../middleware/restricted.js');
+
+// require.requireActual('../middleware/restricted.js') ;
 
 describe('auth /api/auth', () => {
   beforeEach(done => prepBeforeEach(done));

@@ -1,5 +1,6 @@
 const express = require('express'),
-      Reviews = require('../models/reviews.js');
+      Reviews = require('../models/reviews.js'),
+      restricted = require('../middleware/restricted.js');
 
 const router = express.Router();
 
@@ -39,6 +40,8 @@ router.get('/', (req, res) => {
    @api {post} reviews/ Post review
    @apiName PostReview
    @apiGroup Reviews
+
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number{0.0-5.0}} rating a floating point number between 0 and 5
    @apiParam {String} comment optional comment string
@@ -65,7 +68,7 @@ router.get('/', (req, res) => {
    
 */
 
-router.post('/', (req, res) => {
+router.post('/', restricted, (req, res) => {
   const review = req.body;
   if (review && review.rating && review.user_id && review.book_id) {
     Reviews.insert(review)
@@ -124,6 +127,7 @@ router.get('/:id', (req, res) => {
    @apiName UpdateReview
    @apiGroup Reviews
    
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number} id review id
    
@@ -147,7 +151,7 @@ router.get('/:id', (req, res) => {
 */
 
 
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const {id} = req.params,
         changes = req.body;
   // todo better validation
@@ -177,6 +181,7 @@ router.put('/:id', (req, res) => {
    @apiName DeleteReview
    @apiGroup Reviews
    
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number} id review id
    
@@ -184,7 +189,7 @@ router.put('/:id', (req, res) => {
    HTTP/1.1 204 OK
 */
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const {id} = req.params;
   Reviews.remove(id)
     .then(removed => removed
