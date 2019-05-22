@@ -5,8 +5,8 @@ const request = require('supertest'),
       secrets = require('../secrets.js'),
       prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
-beforeEach(done => prepBeforeEach(done));
 describe('auth /api/auth', () => {
+  beforeEach(done => prepBeforeEach(done));
   describe('register /register', () => {
     const newUser = {username: 'test123123', password: 'test'};
     it('register user', async () => {
@@ -43,6 +43,22 @@ describe('auth /api/auth', () => {
       expect(jwt.verify(token, secrets.jwt));
       body.token = undefined;
       expect(body.username).toEqual(newUser.username);
+    });
+  });
+  describe('refresh token /refresh', () => {
+    it('refresh success', async () => {
+      const existingUser = {username: 'henry', password: 'test'};
+      const {body} = await request(server).post('/api/auth/login').send(existingUser);
+      const token = body.token;
+      expect(jwt.verify(token, secrets.jwt));
+      expect(body.username).toEqual(existingUser.username);
+      const res = await request(server).post('/api/auth/refresh').set('Authorization', token);
+      expect(jwt.verify(body.token, secrets.jwt));
+      expect(res.body.username).toEqual(existingUser.username);
+    });
+    it('error', async () => {
+      const {status} = await request(server).post('/api/auth/refresh').set('Authorization', "notatoken");
+      expect(status).toBe(401);
     });
   });
 });
