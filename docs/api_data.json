@@ -1033,7 +1033,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 4.6,\n  comment: 'It was pretty good',\n  book_id: 1,\n  user_id: 2 }",
+          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 4.6,\n  comment: 'It was pretty good',\n  username: 'blevins',\n  title: 'Classical Mechanics'\n  book_id: 1,\n  user_id: 2 }",
           "type": "json"
         }
       ]
@@ -1083,7 +1083,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 0.5,\n  comment: 'It is not very good',\n  book_id: 1,\n  user_id: 2 }",
+          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 0.5,\n  comment: 'It is not very good',\n  username: 'blevins',\n  title: 'Classical Mechanics'\n  book_id: 1,\n  user_id: 2 }",
           "type": "json"
         }
       ]

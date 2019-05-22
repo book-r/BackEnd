@@ -24,7 +24,6 @@ const router = express.Router();
    }]
 */
 
-
 router.get('/', (req, res) => {
   const {user_id} = req.query;
   Reviews.getBy(user_id ? {user_id} : {})
@@ -59,6 +58,8 @@ router.get('/', (req, res) => {
    { id: 5
      rating: 4.6,
      comment: 'It was pretty good',
+     username: 'blevins',
+     title: 'Classical Mechanics'
      book_id: 1,
      user_id: 2 }
    
@@ -139,6 +140,8 @@ router.get('/:id', (req, res) => {
    { id: 5
      rating: 0.5,
      comment: 'It is not very good',
+     username: 'blevins',
+     title: 'Classical Mechanics'
      book_id: 1,
      user_id: 2 }
 */
