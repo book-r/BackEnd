@@ -1,18 +1,10 @@
 const request = require('supertest'),
       server = require('../server.js'),
-      db = require('../data/dbConfig.js');
+      db = require('../data/dbConfig.js'),
+      prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
 describe('books /api/books', () => {
-  beforeEach(done => db.migrate.rollback()
-             .then(() => {
-               db.migrate.latest()
-                 .then(() => {
-                   db.seed.run()
-                     .then(() => {
-                       done();
-                     });
-                 });
-             }));
+  beforeEach(done => prepBeforeEach(done));
   describe('get', () => {
     it('success', async () => {
       const {status} = await request(server).get('/api/books');
@@ -142,7 +134,7 @@ describe('books /api/books', () => {
     });
   });
   describe('delete', () => {
-    const newBook = { title: 'Quantum Mechanics',
+    const newBook = { title: 'Quantum Mechanics 100',
                       isbn: '9780131118928',
                       cover_url: 'http://covers.openlibrary.org/b/isbn/9780131118928-L.jpg',
                       description:
@@ -153,6 +145,7 @@ describe('books /api/books', () => {
                     };
     it('success', async () => {
       const {status, body} = await request(server).post('/api/books/').send(newBook);
+      console.log(body);
       expect(status).toBe(201);
       const res = await request(server).delete('/api/books/' + body.id);
       expect(res.status).toBe(204);

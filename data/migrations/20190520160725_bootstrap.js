@@ -32,8 +32,9 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
       tbl.timestamps();
-      tbl.unique([knex.raw('LOWER(title)'), 'edition']);
+      // tbl.unique([knex.raw('LOWER("title")'), 'edition'], 'unique_title_edition');
     })
+    .raw('CREATE UNIQUE INDEX title_edition_unique on books (LOWER(title), edition);')
     .createTable('authors', tbl => {
       tbl.increments();
       tbl
@@ -119,12 +120,12 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema
-    .dropTableIfExists('books')
-    .dropTableIfExists('publishers')
     .dropTableIfExists('books_authors')
+    .dropTableIfExists('books_subjects')
     .dropTableIfExists('authors')
     .dropTableIfExists('reviews')
     .dropTableIfExists('users')
-    .dropTableIfExists('books_subjects')
-    .dropTableIfExists('subjects');
+    .dropTableIfExists('subjects')
+    .dropTableIfExists('books')
+    .dropTableIfExists('publishers');
 };

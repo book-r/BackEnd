@@ -2,7 +2,6 @@ exports.seed = function(knex, Promise) {
   return knex('books').del()
     .then(() => knex('books').insert([
       {
-        id: 1,
         title: 'Classical Mechanics',
         isbn: '9781891389221',
         cover_url: 'https://www.uscibooks.com/taycm.jpg',

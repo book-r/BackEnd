@@ -1,18 +1,10 @@
 const request = require('supertest'),
       server = require('../server.js'),
-      db = require('../data/dbConfig.js');
+      db = require('../data/dbConfig.js'),
+      prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
-describe('books /api/authors', () => {
-  beforeEach(done => db.migrate.rollback()
-             .then(() => {
-               db.migrate.latest()
-                 .then(() => {
-                   db.seed.run()
-                     .then(() => {
-                       done();
-                     });
-                 });
-             }));
+describe('authors /api/authors', () => {
+  beforeEach(done => prepBeforeEach(done));
   describe('get /', () => {
     it('success', async () => {
       const {status} = await request(server).get('/api/authors');
@@ -34,7 +26,6 @@ describe('books /api/authors', () => {
     });
     it('contents', async () => {
       const {body} = await request(server).get('/api/authors/1');
-      console.log(body);
       expect(body).toEqual({ id: 1,
                              name: 'John R. Taylor',
                              books:
@@ -54,7 +45,7 @@ describe('books /api/authors', () => {
     });
   });
   describe('put /:id', () => {
-    const newAuthor = {name: 'Henry Blevins'};
+    const newAuthor = {name: 'Henry Blevins 2'};
     it('success', async () => {
       const {status} = await request(server).put('/api/authors/1').send(newAuthor);
       expect(status).toBe(200);
@@ -87,14 +78,16 @@ describe('books /api/authors', () => {
     });
   });
   describe('post /', () => {
-    const newAuthor = {name: 'Henry Blevins'};
     it('success', async () => {
+      const newAuthor = {name: 'Henry Blevins 123'};
       const {status} = await request(server).post('/api/authors/').send(newAuthor);
       expect(status).toBe(201);
     });
     it('returns new author', async () => {
+      const newAuthor = {name: 'Henry Blevins 123123'};
       const {body} = await request(server).post('/api/authors/').send(newAuthor);
-      expect(body).toEqual({...newAuthor, id: 2});
+      body.id = undefined;
+      expect(body).toEqual(newAuthor);
     });
   });
 });
