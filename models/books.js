@@ -8,7 +8,8 @@ module.exports = {
   insert,
   update,
   remove,
-  withAuthor
+  withAuthor,
+  withSubject
 };
 
 function get(id) {
@@ -64,4 +65,13 @@ function withAuthor(author_id) {
     })
     .join('ba', 'ba.book_id', 'books.id')
     .where({author_id});
+}
+
+function withSubject(subject_id) {
+  return get()
+    .with('bs', qb => {
+      qb.select('book_id', 'subject_id').from('books_subjects');
+    })
+    .join('bs', 'bs.book_id', 'books.id')
+    .where({subject_id});
 }

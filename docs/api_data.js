@@ -949,5 +949,195 @@ define({ "api": [
     "version": "0.0.0",
     "filename": "routes/reviews.js",
     "groupTitle": "Reviews"
+  },
+  {
+    "type": "delete",
+    "url": "subjects/:id",
+    "title": "Delete subject by id",
+    "name": "DeleteSubject",
+    "group": "Subjects",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 204 OK",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/subjects.js",
+    "groupTitle": "Subjects"
+  },
+  {
+    "type": "get",
+    "url": "subjects/:id",
+    "title": "Get subject by id",
+    "name": "GetSubject",
+    "group": "Subjects",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "books",
+            "description": "<p>an array of book objects in the subject</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'Physics',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     year: 2005,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/subjects.js",
+    "groupTitle": "Subjects"
+  },
+  {
+    "type": "get",
+    "url": "subjects/",
+    "title": "Get subjects",
+    "name": "GetSubjects",
+    "group": "Subjects",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n[{id: 1, name: \"Physics\"}]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/subjects.js",
+    "groupTitle": "Subjects"
+  },
+  {
+    "type": "put",
+    "url": "subjects/:id",
+    "title": "Update subject by id",
+    "name": "UpdateSubject",
+    "group": "Subjects",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/subjects.js",
+    "groupTitle": "Subjects"
   }
 ] });
