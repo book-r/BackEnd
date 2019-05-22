@@ -32,8 +32,9 @@ exports.up = function(knex, Promise) {
         .onDelete('RESTRICT')
         .onUpdate('CASCADE');
       tbl.timestamps();
-      tbl.unique([knex.raw('LOWER("title")'), 'edition'], 'unique_title_edition');
+      // tbl.unique([knex.raw('LOWER("title")'), 'edition'], 'unique_title_edition');
     })
+    .raw('CREATE UNIQUE INDEX title_edition_unique on books (LOWER(title), edition);')
     .createTable('authors', tbl => {
       tbl.increments();
       tbl
