@@ -5,7 +5,11 @@ const db = require('../data/dbConfig.js'),
 
 module.exports = {
   get,
-  insert
+  insert,
+  update,
+  remove,
+  withAuthor,
+  withSubject
 };
 
 function get(id) {
@@ -44,4 +48,30 @@ function insert(book) {
   return db('books')
     .insert(book, 'id')
     .then(([id]) => get(id));
+}
+
+function update(id, changes) {
+  return db('books').where({id}).update(changes).then(updated => updated ? get(id) : null);
+}
+
+function remove(id) {
+  return db('books').where({id}).del();
+}
+
+function withAuthor(author_id) {
+  return get()
+    .with('ba', qb => {
+      qb.select('book_id', 'author_id').from('books_authors');
+    })
+    .join('ba', 'ba.book_id', 'books.id')
+    .where({author_id});
+}
+
+function withSubject(subject_id) {
+  return get()
+    .with('bs', qb => {
+      qb.select('book_id', 'subject_id').from('books_subjects');
+    })
+    .join('bs', 'bs.book_id', 'books.id')
+    .where({subject_id});
 }

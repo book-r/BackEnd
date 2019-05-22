@@ -2,7 +2,7 @@ const request = require('supertest'),
       server = require('../server.js'),
       db = require('../data/dbConfig.js');
 
-describe('books /api/authors', () => {
+describe('books /api/subjects', () => {
   beforeEach(done => db.migrate.rollback()
              .then(() => {
                db.migrate.latest()
@@ -15,28 +15,27 @@ describe('books /api/authors', () => {
              }));
   describe('get /', () => {
     it('success', async () => {
-      const {status} = await request(server).get('/api/authors');
+      const {status} = await request(server).get('/api/subjects');
       expect(status).toBe(200);
     });
     it('contents', async () => {
-      const {body} = await request(server).get('/api/authors');
-      expect(body).toEqual([{"id": 1, "name": "John R. Taylor"}]);
+      const {body} = await request(server).get('/api/subjects');
+      expect(body).toEqual([{"id": 1, "name": "Physics"}]);
     });
   });
   describe('get /:id', () => {
     it('success', async () => {
-      const {status} = await request(server).get('/api/authors/1');
+      const {status} = await request(server).get('/api/subjects/1');
       expect(status).toBe(200);
     });
     it('failure', async () => {
-      const {status} = await request(server).get('/api/authors/12312313');
+      const {status} = await request(server).get('/api/subjects/12312313');
       expect(status).toBe(404);
     });
     it('contents', async () => {
-      const {body} = await request(server).get('/api/authors/1');
-      console.log(body);
+      const {body} = await request(server).get('/api/subjects/1');
       expect(body).toEqual({ id: 1,
-                             name: 'John R. Taylor',
+                             name: 'Physics',
                              books:
                              [ { id: 1,
                                  title: 'Classical Mechanics',
@@ -54,47 +53,47 @@ describe('books /api/authors', () => {
     });
   });
   describe('put /:id', () => {
-    const newAuthor = {name: 'Henry Blevins'};
+    const newSubject = {name: 'New Subject'};
     it('success', async () => {
-      const {status} = await request(server).put('/api/authors/1').send(newAuthor);
+      const {status} = await request(server).put('/api/subjects/1').send(newSubject);
       expect(status).toBe(200);
     });
     it('failure', async () => {
-      const {status} = await request(server).put('/api/authors/12312313').send(newAuthor);
+      const {status} = await request(server).put('/api/subjects/12312313').send(newSubject);
       expect(status).toBe(404);
     });
-    it('modified author', async () => {
-      const {body} = await request(server).put('/api/authors/1').send(newAuthor);
+    it('modified subject', async () => {
+      const {body} = await request(server).put('/api/subjects/1').send(newSubject);
 
-      expect(body).toEqual({...newAuthor, id: 1});
+      expect(body).toEqual({...newSubject, id: 1});
     });
   });
   describe('delete /:id', () => {
-    const newAuthor = {name: 'Henry Blevins'};
+    const newSubject = {name: 'New Subject'};
     it('failure has books', async () => {
-      const {status} = await request(server).delete('/api/authors/1');
+      const {status} = await request(server).delete('/api/subjects/1');
       expect(status).toBe(500);
     });
     it('failure does not exist', async () => {
-      const {status} = await request(server).delete('/api/authors/11231231');
+      const {status} = await request(server).delete('/api/subjects/11231231');
       expect(status).toBe(404);
 
     });
     it('success', async () => {
-      const {body} = await request(server).post('/api/authors').send(newAuthor);
-      const {status} = await request(server).delete('/api/authors/' + body.id);
+      const {body} = await request(server).post('/api/subjects').send(newSubject);
+      const {status} = await request(server).delete('/api/subjects/' + body.id);
       expect(status).toBe(204);
     });
   });
   describe('post /', () => {
-    const newAuthor = {name: 'Henry Blevins'};
+    const newSubject = {name: 'New Subject'};
     it('success', async () => {
-      const {status} = await request(server).post('/api/authors/').send(newAuthor);
+      const {status} = await request(server).post('/api/subjects/').send(newSubject);
       expect(status).toBe(201);
     });
-    it('returns new author', async () => {
-      const {body} = await request(server).post('/api/authors/').send(newAuthor);
-      expect(body).toEqual({...newAuthor, id: 2});
+    it('returns new subject', async () => {
+      const {body} = await request(server).post('/api/subjects/').send(newSubject);
+      expect(body).toEqual({...newSubject, id: 2});
     });
   });
 });

@@ -1,34 +1,34 @@
 const express = require('express'),
-      Authors = require('../models/authors.js'),
+      Subjects = require('../models/subjects.js'),
       Books = require('../models/books.js');
 
 const router = express.Router();
 
 /**
-   @api {get} authors/ Get authors
-   @apiName GetAuthors
-   @apiGroup Authors
+   @api {get} subjects/ Get subjects
+   @apiName GetSubjects
+   @apiGroup Subjects
    
-   @apiSuccess {Number} id author id
-   @apiSuccess {String} name author name
+   @apiSuccess {Number} id subject id
+   @apiSuccess {String} name subject name
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
-   [{id: 1, name: "John R. Taylor"}]
+   [{id: 1, name: "Physics"}]
 */
 router.get('/', (req, res) => {
-  Authors.get()
-    .then(authors => res.status(200).json(authors))
+  Subjects.get()
+    .then(subjects => res.status(200).json(subjects))
     .catch(error => res.status(500).json({
-      message: 'Error getting authors.',
+      message: 'Error getting subjects.',
       error: error.toString()
     }));
 });
 
-function validateAuthor(author) {
-  if (author && author.name) {
-    if (typeof author.name !== 'string') return 'Name needs to be string';
-    if (author.name.length > 50) return 'Name is too long';
+function validateSubject(subject) {
+  if (subject && subject.name) {
+    if (typeof subject.name !== 'string') return 'Name needs to be string';
+    if (subject.name.length > 50) return 'Name is too long';
     return true;
   } else {
     return 'Requires name';
@@ -36,13 +36,13 @@ function validateAuthor(author) {
 }
 
 router.post('/', (req, res) => {
-  const author = req.body,
-        valid = validateAuthor(author);
+  const subject = req.body,
+        valid = validateSubject(subject);
   if (valid === true) {
-    Authors.insert(author)
-      .then(author => res.status(201).json(author))
+    Subjects.insert(subject)
+      .then(subject => res.status(201).json(subject))
       .catch(error => res.status(500).json({
-        message: 'Error inserting author.',
+        message: 'Error inserting subject.',
         error: error.toString()
       }));
   } else {
@@ -54,20 +54,20 @@ router.post('/', (req, res) => {
 
 
 /**
-   @api {get} authors/:id Get author by id
-   @apiName GetAuthor
-   @apiGroup Authors
+   @api {get} subjects/:id Get subject by id
+   @apiName GetSubject
+   @apiGroup Subjects
 
-   @apiParam {Number} id author id
+   @apiParam {Number} id subject id
    
-   @apiSuccess {Number} id author id
-   @apiSuccess {String} name author name
-   @apiSuccess {Array} books an array of book objects written by the author
+   @apiSuccess {Number} id subject id
+   @apiSuccess {String} name subject name
+   @apiSuccess {Array} books an array of book objects in the subject
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
    { id: 1,
-    name: 'John R. Taylor',
+    name: 'Physics',
     books:
     [ { id: 1,
         title: 'Classical Mechanics',
@@ -86,37 +86,36 @@ router.post('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const {id} = req.params;
-  Authors.get(id)
-    .then(author => author
-          ? Books.withAuthor(id).then(books => res.status(200).json({...author, books}))
+  Subjects.get(id)
+    .then(subject => subject
+          ? Books.withSubject(id).then(books => res.status(200).json({...subject, books}))
           : res.status(404).json({
-            message: `Author with id ${id} does not exist`
+            message: `Subject with id ${id} does not exist`
           }))
     .catch(error => res.status(500).json({
-      message: 'Error getting author',
+      message: 'Error getting subject',
       error: error.toString()
     }));
 });
 
 /**
-   @api {put} authors/:id Update author by id
-   @apiName UpdateAuthor
-   @apiGroup Authors
+   @api {put} subjects/:id Update subject by id
+   @apiName UpdateSubject
+   @apiGroup Subjects
 
-   @apiParam {Number} id author id
-   @apiParam {String} name author name
+   @apiParam {Number} id subject id
+   @apiParam {String} name subject name
 
    @apiParamExample Example Body:
    { name: 'New Name' }
    
-   @apiSuccess {Number} id author id
-   @apiSuccess {String} name author name
+   @apiSuccess {Number} id subject id
+   @apiSuccess {String} name subject name
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
    { id: 1,
-    name: 'New Name'
-   }
+    name: 'New Name' }
 */
 
 router.put('/:id', (req, res) => {
@@ -125,14 +124,14 @@ router.put('/:id', (req, res) => {
   // todo better validation
   changes.id = undefined;
   if (changes && changes.name) {
-    Authors.update(id, changes)
-      .then(author => author
-            ? res.status(200).json(author)
+    Subjects.update(id, changes)
+      .then(subject => subject
+            ? res.status(200).json(subject)
             : res.status(404).json({
-              message: `Author with id ${id} does not exist`
+              message: `Subject with id ${id} does not exist`
             }))
       .catch(error => res.status(500).json({
-        message: 'Error updating author',
+        message: 'Error updating subject',
         error: error.toString()
       }));
   } else {
@@ -143,11 +142,11 @@ router.put('/:id', (req, res) => {
 });
 
 /**
-   @api {delete} authors/:id Delete author by id
-   @apiName DeleteAuthor
-   @apiGroup Authors
+   @api {delete} subjects/:id Delete subject by id
+   @apiName DeleteSubject
+   @apiGroup Subjects
 
-   @apiParam {Number} id author id
+   @apiParam {Number} id subject id
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 204 OK
@@ -155,14 +154,14 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const {id} = req.params;
-  Authors.remove(id)
+  Subjects.remove(id)
     .then(removed => removed
           ? res.status(204).end()
           : res.status(404).json({
-            message: `Author with id ${id} does not exist`
+            message: `Subject with id ${id} does not exist`
           }))
     .catch(error => res.status(500).json({
-      message: 'Error deleting author',
+      message: 'Error deleting subject',
       error: error.toString()
     }));
 });

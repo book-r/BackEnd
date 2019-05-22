@@ -122,4 +122,44 @@ describe('books /api/books', () => {
       expect(body).toEqual(expectedBook);
     });
   });
+  describe('put', () => {
+    const changes = { 
+                      title: 'Better Title',
+                      isbn: '9999999999999',
+                    };
+    it('success', async () => {
+      const {status, body} = await request(server).put('/api/books/1').send(changes);
+      expect(status).toBe(200);
+    });
+    it('failure', async () => {
+      const {status, body} = await request(server).put('/api/books/11231231').send(changes);
+      expect(status).toBe(404);
+    });
+    it('returns new book', async () => {
+      const {body} = await request(server).put('/api/books/1').send(changes);
+      const {title, isbn} = body;
+      expect({title, isbn}).toEqual(changes);
+    });
+  });
+  describe('delete', () => {
+    const newBook = { title: 'Quantum Mechanics',
+                      isbn: '9780131118928',
+                      cover_url: 'http://covers.openlibrary.org/b/isbn/9780131118928-L.jpg',
+                      description:
+                      'A very good book for undergraduate quantum mechanics. What the.',
+                      edition: '2',
+                      year: 2004,
+                      publisher_id: 1,
+                    };
+    it('success', async () => {
+      const {status, body} = await request(server).post('/api/books/').send(newBook);
+      expect(status).toBe(201);
+      const res = await request(server).delete('/api/books/' + body.id);
+      expect(res.status).toBe(204);
+    });
+    it('failure', async () => {
+      const {status} = await request(server).delete('/api/books/11231231');
+      expect(status).toBe(404);
+    });
+  });
 });
