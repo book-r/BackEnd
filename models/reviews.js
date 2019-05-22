@@ -10,26 +10,26 @@ module.exports = {
 
 
 function get(id) {
+  const query = db
+        .select('reviews.id', 'title', 'username', 'book_id', 'user_id', 'rating', 'comment')
+        .from('reviews')
+        .with('b', qb => {
+          qb.select('id', 'title').from('books')
+        })
+        .with('u', qb => {
+          qb.select('id', 'username').from('users')
+        })
+        .join('b', 'b.id', 'reviews.book_id')
+        .join('u', 'u.id', 'reviews.user_id')
   if (id) {
-    return db('reviews').where({id}).first();
+    return query.where({'reviews.id': id}).first();
   } else {
-    return db('reviews');
+    return query;
   }
 }
 
 function getBy(whereObj) {
-  return db
-    .select()
-    .from('reviews')
-    .with('b', qb => {
-      qb.select('id', 'title').from('books')
-    })
-    .with('u', qb => {
-      qb.select('id', 'username').from('users')
-    })
-    .join('b', 'b.id', 'reviews.book_id')
-    .join('u', 'u.id', 'reviews.user_id')
-    .where(whereObj);
+  return get().where(whereObj);
 }
 
 function insert(review) {

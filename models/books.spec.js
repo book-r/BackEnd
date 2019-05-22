@@ -1,17 +1,9 @@
-const db  = require('../data/dbConfig.js');
-const Books = require('./books.js');
+const db  = require('../data/dbConfig.js'),
+      Books = require('./books.js'),
+      prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
 describe('books model', () => {
-  beforeEach(done => db.migrate.rollback()
-             .then(() => {
-               db.migrate.latest()
-                 .then(() => {
-                   db.seed.run()
-                     .then(() => {
-                       done();
-                     });
-                 });
-             }));
+  beforeEach(done => prepBeforeEach(done));
   describe('get', () => {
     it('get all', async () => {
       const books = await Books.get();

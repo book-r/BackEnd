@@ -1,18 +1,10 @@
 const request = require('supertest'),
       server = require('../server.js'),
-      db = require('../data/dbConfig.js');
+      db = require('../data/dbConfig.js'),
+      prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
 describe('books /api/subjects', () => {
-  beforeEach(done => db.migrate.rollback()
-             .then(() => {
-               db.migrate.latest()
-                 .then(() => {
-                   db.seed.run()
-                     .then(() => {
-                       done();
-                     });
-                 });
-             }));
+  beforeEach(done => prepBeforeEach(done));
   describe('get /', () => {
     it('success', async () => {
       const {status} = await request(server).get('/api/subjects');

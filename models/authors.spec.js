@@ -1,17 +1,9 @@
-const db  = require('../data/dbConfig.js');
-const Authors = require('./authors.js');
+const db  = require('../data/dbConfig.js'),
+      Authors = require('./authors.js'),
+      prepBeforeEach = require('../helpers/prepBeforeEach.js');
 
 describe('authors model', () => {
-  beforeEach(done => db.migrate.rollback()
-             .then(() => {
-               db.migrate.latest()
-                 .then(() => {
-                   db.seed.run()
-                     .then(() => {
-                       done();
-                     });
-                 });
-             }));
+  beforeEach(done => prepBeforeEach(done));
   describe('get', () => {
     it('get all', async () => {
       const authors = await Authors.get();

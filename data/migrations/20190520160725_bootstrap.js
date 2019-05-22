@@ -120,12 +120,12 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema
-    .dropTableIfExists('books')
-    .dropTableIfExists('publishers')
     .dropTableIfExists('books_authors')
+    .dropTableIfExists('books_subjects')
     .dropTableIfExists('authors')
     .dropTableIfExists('reviews')
     .dropTableIfExists('users')
-    .dropTableIfExists('books_subjects')
-    .dropTableIfExists('subjects');
+    .dropTableIfExists('subjects')
+    .dropTableIfExists('books')
+    .dropTableIfExists('publishers');
 };

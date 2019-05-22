@@ -24,7 +24,7 @@ function get(id) {
         .join('p', 'p.publisher_id', 'books.publisher_id')
         .leftJoin('r', 'r.book_id', 'books.id')
         .avg({average: 'rating'})
-        .groupBy('id');
+        .groupBy('id', 'publisher');
   if (id) {
     return Promise.all([
       query.where({'books.id': id}).first(),
