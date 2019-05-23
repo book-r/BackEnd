@@ -543,7 +543,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "Authorization",
-            "description": "<p>json web token (only needed if you want user_rating)</p>"
+            "description": "<p>json web token (only needed if you want user_review)</p>"
           }
         ]
       }
@@ -629,10 +629,10 @@ define({ "api": [
           },
           {
             "group": "Success 200",
-            "type": "Number",
+            "type": "Object",
             "optional": false,
-            "field": "user_rating",
-            "description": "<p>User review rating or null (only if logged in)</p>"
+            "field": "user_review",
+            "description": "<p>User review object or null (only if logged in)</p>"
           },
           {
             "group": "Success 200",
@@ -667,7 +667,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  user_rating: 5.00,\n  featured: true,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\"}],\n  subjects: [{id: 1, name: \"Physics\"}],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  user_review: {\n    book_id: 1,\n    comment: \"Good book!\",\n    id: 1,\n    rating: 5,\n    title: \"Classical Mechanics\",\n    user_id: 1,\n    username: \"henry\",\n  }\n  featured: true,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\"}],\n  subjects: [{id: 1, name: \"Physics\"}],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
           "type": "json"
         }
       ]
