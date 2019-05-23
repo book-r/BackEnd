@@ -361,7 +361,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'John R. Taylor',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     year: 2005,\n     featured: 1,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'John R. Taylor',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     year: 2005,\n     featured: true,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
           "type": "json"
         }
       ]
@@ -667,7 +667,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  user_rating: 5.00,\n  featured: 1,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\",},],\n  subjects: [{id: 1, name: \"Physics\",},],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  user_rating: 5.00,\n  featured: true,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\",},],\n  subjects: [{id: 1, name: \"Physics\",},],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
           "type": "json"
         }
       ]
@@ -697,7 +697,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n[ { \n  id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: 1,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books' \n} ]",
+          "content": "HTTP/1.1 200 OK\n[ { \n  id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: true,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books' \n} ]",
           "type": "json"
         }
       ]
@@ -887,7 +887,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: 1,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n}",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: true,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n}",
           "type": "json"
         }
       ]
@@ -1627,7 +1627,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'Physics',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     featured: 1,\n     year: 2005,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n name: 'Physics',\n books:\n [ { id: 1,\n     title: 'Classical Mechanics',\n     isbn: '9781891389221',\n     cover_url: 'https://www.uscibooks.com/taycm.jpg',\n     description:\n     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n     edition: '1',\n     featured: true,\n     year: 2005,\n     publisher_id: 1,\n     created_at: null,\n     updated_at: null,\n     publisher: 'University Science Books',\n     average: 4.25 } ] }",
           "type": "json"
         }
       ]

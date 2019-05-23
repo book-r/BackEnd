@@ -98,7 +98,7 @@ router.post('/', restricted, (req, res) => {
         description:
         'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
         edition: '1',
-        featured: 1,
+        featured: true,
         year: 2005,
         publisher_id: 1,
         created_at: null,

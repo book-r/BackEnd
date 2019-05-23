@@ -23,8 +23,8 @@ function get(id, user_id) {
         })
         .join('p', 'p.publisher_id', 'books.publisher_id')
         .leftJoin('r', 'r.book_id', 'books.id')
-        .avg({average: 'rating'})
-        .groupBy('id', 'publisher');
+        .avg({average: 'r.rating'})
+        .groupBy(['id', 'publisher'].concat(user_id ? ['user_rating'] : []));
   if (id) {
     return Promise.all([
       query

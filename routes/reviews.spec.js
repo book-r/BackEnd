@@ -50,7 +50,6 @@ describe('reviews /api/reviews', () => {
     it('success', async () => {
       const newUser = {username: 'asldjkalskdj', password: 'test'};
       const res = await request(server).post('/api/auth/register').send(newUser);
-      console.log("herea", res.body);
       restricted.mockImplementation((req, res, next) => {
         req.token = {id: 3};
         next();

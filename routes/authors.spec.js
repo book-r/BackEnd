@@ -40,7 +40,7 @@ describe('authors /api/authors', () => {
                                  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
                                  edition: '1',
                                  year: 2005,
-                                 featured: 1,
+                                 featured: true,
                                  publisher_id: 1,
                                  created_at: null,
                                  updated_at: null,

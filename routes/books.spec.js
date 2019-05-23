@@ -25,7 +25,7 @@ describe('books /api/books', () => {
                        'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
                        average: 4.25,
                        edition: '1',
-                       featured: 1,
+                       featured: true,
                        year: 2005,
                        publisher_id: 1,
                        created_at: null,
@@ -44,7 +44,7 @@ describe('books /api/books', () => {
                    'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
                    average: 4.25,
                    edition: '1',
-                   featured: 1,
+                   featured: true,
                    year: 2005,
                    publisher_id: 1,
                    created_at: null,
@@ -90,7 +90,6 @@ describe('books /api/books', () => {
         req.token = {id: 1};
         next();
       });
-      console.log('this is it');
       const {body} = await request(server).get('/api/books/1');
       expect(body).toEqual({...seed, user_rating: 5});
     });
