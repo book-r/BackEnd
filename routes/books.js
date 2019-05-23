@@ -214,7 +214,7 @@ router.put('/:id', restricted, (req, res) => {
    @apiName GetBook
    @apiGroup Books
 
-   @apiHeader {String} Authorization json web token (only needed if you want user_rating)
+   @apiHeader {String} Authorization json web token (only needed if you want user_review)
 
    @apiParam {Number} id book id
    
@@ -227,7 +227,7 @@ router.put('/:id', restricted, (req, res) => {
    @apiSuccess {String} edition book edition
    @apiSuccess {Number} year year published
    @apiSuccess {Bool} featured featured
-   @apiSuccess {Number} user_rating User review rating or null (only if logged in)
+   @apiSuccess {Object} user_review User review object or null (only if logged in)
    @apiSuccess {Number} publisher_id publisher id
    @apiSuccess {String} publisher publisher name
    @apiSuccess {Array} authors array of author objects
@@ -244,7 +244,15 @@ router.put('/:id', restricted, (req, res) => {
      average: 4.25,
      edition: '1',
      year: 2005,
-     user_rating: 5.00,
+     user_review: {
+       book_id: 1,
+       comment: "Good book!",
+       id: 1,
+       rating: 5,
+       title: "Classical Mechanics",
+       user_id: 1,
+       username: "henry",
+     }
      featured: true,
      publisher_id: 1,
      created_at: null,
