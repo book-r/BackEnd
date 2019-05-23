@@ -1,7 +1,8 @@
 const express = require('express'),
       Books = require('../models/books.js'),
       restricted = require('../middleware/restricted.js'),
-      setToken = require('../middleware/setToken.js');
+      setToken = require('../middleware/setToken.js'),
+      Reviews = require('../models/reviews.js');
 
 const router = express.Router();
 
@@ -303,6 +304,53 @@ router.delete('/:id', restricted, (req, res) => {
           }))
     .catch(error => res.status(500).json({
       message: 'Error deleting book',
+      error: error.toString()
+    }));
+});
+
+
+// not tested because of last minute addition
+/**
+   @api {get} books/:id/reviews Get book reviews
+   @apiName DeleteBook
+   @apiGroup Books
+   
+   @apiHeader {String} Authorization json web token
+
+   @apiParam {Number} id book id
+   
+   @apiSuccess {Array} reviews book review array
+   
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 200 OK
+   [
+     {
+       "id": 1,
+       "title": "Classical Mechanics",
+       "username": "henry",
+       "book_id": 1,
+       "user_id": 1,
+       "rating": 5,
+       "comment": "Good book!"
+     },
+     {
+       "id": 2,
+       "title": "Classical Mechanics",
+       "username": "blevins",
+       "book_id": 1,
+       "user_id": 2,
+       "rating": 3.5,
+       "comment": "Love the cover"
+     }
+   ]
+*/
+
+router.get('/:id/reviews', (req, res) => {
+  const {id} = req.params;
+  Reviews.getBy({book_id: id})
+    .then(reviews => res.status(200).json(reviews))
+    .catch(error => res.status(500).json({
+      message: 'Error getting reviews.',
       error: error.toString()
     }));
 });
