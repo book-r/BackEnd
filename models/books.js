@@ -14,7 +14,7 @@ module.exports = {
 
 function get(id, user_id) {
   const query = db('books')
-        .select(['id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'publisher'].concat(user_id ? ['user_rating'] : []))
+        .select(['id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'featured', 'publisher'].concat(user_id ? ['user_rating'] : []))
         .with('p', qb => {
           qb.select('publisher', 'id as publisher_id').from('publishers');
         })
