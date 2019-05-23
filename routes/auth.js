@@ -15,7 +15,7 @@ const router = express.Router();
    @apiParam {String} username username
    @apiParam {String} password password
    
-   @apiParamExample
+   @apiParamExample Example Body:
    { username: 'test',
      password: 'password' }
    
@@ -61,7 +61,7 @@ router.post('/register', (req, res) => {
    @apiParam {String} username username
    @apiParam {String} password password
    
-   @apiParamExample
+   @apiParamExample Example Body:
    { username: 'test',
      password: 'password' }
    

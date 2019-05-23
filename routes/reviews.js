@@ -135,6 +135,7 @@ router.get('/:id', (req, res) => {
    @api {put} reviews/:id Update review by id
    @apiName UpdateReview
    @apiGroup Reviews
+   @apiDescription Only the user who made the review may update it.
    
    @apiHeader {String} Authorization json web token
    
@@ -208,6 +209,7 @@ router.put('/:id', restricted, (req, res) => {
    @api {delete} reviews/:id Delete review by id
    @apiName DeleteReview
    @apiGroup Reviews
+   @apiDescription Only the user who made the review may delete it.
    
    @apiHeader {String} Authorization json web token
    

@@ -38,8 +38,8 @@ function validateAuthor(author) {
 
 
 /**
-   @api {put} authors/ Create author
-   @apiName CreateAuthor
+   @api {post} authors/ Add author
+   @apiName AddAuthor
    @apiGroup Authors
 
    @apiHeader {String} Authorization json web token
@@ -55,8 +55,7 @@ function validateAuthor(author) {
    @apiSuccessExample Success-reponse:
    HTTP/1.1 201 OK
    { id: 1,
-    name: 'New Name'
-   }
+    name: 'New Name' }
 */
 
 
