@@ -30,6 +30,8 @@ describe('books /api/books', () => {
                        publisher_id: 1,
                        created_at: null,
                        updated_at: null,
+                       subjects: [{id: 1, name: 'Physics'}],
+                       authors: [{id: 1, name: 'John R. Taylor'}],
                        publisher: 'University Science Books' } ];
       expect(body).toEqual(seed);
     });
@@ -49,19 +51,10 @@ describe('books /api/books', () => {
                    publisher_id: 1,
                    created_at: null,
                    updated_at: null,
-                   authors: [
-                     {
-                       id: 1,
-                       name: "John R. Taylor",
-                     },
-                   ],
-                   subjects: [
-                     {
-                       id: 1,
-                       name: "Physics",
-                     },
-                   ],
+                   subjects: [{id: 1, name: 'Physics'}],
+                   authors: [{id: 1, name: 'John R. Taylor'}],
                    publisher: 'University Science Books',
+                   user_review: null,
                    reviews:
                    [ { id: 1,
                        rating: 5,
@@ -91,7 +84,16 @@ describe('books /api/books', () => {
         next();
       });
       const {body} = await request(server).get('/api/books/1');
-      expect(body).toEqual({...seed, user_rating: 5});
+      expect(body).toEqual({...seed,
+                            user_review: {
+                              book_id: 1,
+                              comment: "Good book!",
+                              id: 1,
+                              rating: 5,
+                              title: "Classical Mechanics",
+                              user_id: 1,
+                              username: "henry",
+                            }});
     });
     it('failure', async () => {
       const {status} = await request(server).get('/api/books/1231231');
@@ -123,9 +125,10 @@ describe('books /api/books', () => {
                              average: null,
                              created_at: null,
                              updated_at: null,
-                             authors: [],
+                             authors: [{}],
                              reviews: [],
-                             subjects: []
+                             subjects: [{}],
+                             user_review: null,
                            };
       expect(body).toEqual(expectedBook);
     });

@@ -20,6 +20,8 @@ describe('books model', () => {
                        publisher_id: 1,
                        created_at: null,
                        updated_at: null,
+                       subjects: [{id: 1, name: 'Physics'}],
+                       authors: [{id: 1, name: 'John R. Taylor'}],
                        publisher: 'University Science Books' } ];
       expect(books).toEqual(seed);
     });
@@ -39,18 +41,9 @@ describe('books model', () => {
                      created_at: null,
                      updated_at: null,
                      publisher: 'University Science Books',
-                     authors: [
-                       {
-                         id: 1,
-                         name: "John R. Taylor",
-                       },
-                     ],
-                     subjects: [
-                       {
-                         id: 1,
-                         name: "Physics",
-                       },
-                     ],
+                     subjects: [{id: 1, name: 'Physics'}],
+                     authors: [{id: 1, name: 'John R. Taylor'}],
+                     user_review: null,
                      reviews:
                      [ { id: 1,
                          rating: 5,
@@ -88,9 +81,10 @@ describe('books model', () => {
                              created_at: null,
                              updated_at: null,
                              average: null,
-                             authors: [],
+                             authors: [{}],
                              reviews: [],
-                             subjects: []
+                             subjects: [{}],
+                             user_review: null,
                            };
       expect(book).toEqual(expectedBook);
     });
@@ -109,6 +103,8 @@ describe('books model', () => {
                               publisher_id: 1,
                               featured: true,
                               title: "Classical Mechanics",
+                              subjects: [{id: 1, name: 'Physics'}],
+                              authors: [{id: 1, name: 'John R. Taylor'}],
                               updated_at: null,
                               year: 2005}]);
     });
