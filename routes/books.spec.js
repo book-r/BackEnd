@@ -1,7 +1,10 @@
 const request = require('supertest'),
       server = require('../server.js'),
       db = require('../data/dbConfig.js'),
-      prepBeforeEach = require('../helpers/prepBeforeEach.js');
+      prepBeforeEach = require('../helpers/prepBeforeEach.js'),
+      restricted = require('../middleware/restricted.js');
+
+jest.mock('../middleware/restricted.js');
 
 describe('books /api/books', () => {
   beforeEach(done => prepBeforeEach(done));
@@ -145,7 +148,6 @@ describe('books /api/books', () => {
                     };
     it('success', async () => {
       const {status, body} = await request(server).post('/api/books/').send(newBook);
-      console.log(body);
       expect(status).toBe(201);
       const res = await request(server).delete('/api/books/' + body.id);
       expect(res.status).toBe(204);

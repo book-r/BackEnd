@@ -1,5 +1,6 @@
 const express = require('express'),
-      Reviews = require('../models/reviews.js');
+      Reviews = require('../models/reviews.js'),
+      restricted = require('../middleware/restricted.js');
 
 const router = express.Router();
 
@@ -24,7 +25,6 @@ const router = express.Router();
    }]
 */
 
-
 router.get('/', (req, res) => {
   const {user_id} = req.query;
   Reviews.getBy(user_id ? {user_id} : {})
@@ -40,11 +40,12 @@ router.get('/', (req, res) => {
    @api {post} reviews/ Post review
    @apiName PostReview
    @apiGroup Reviews
+
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number{0.0-5.0}} rating a floating point number between 0 and 5
    @apiParam {String} comment optional comment string
    @apiParam {Number} book_id book id
-   @apiParam {Number} user_id id of user posting. Will be removed after auth is implemented.
    
    @apiParamExample Example request body:
    { rating: 4.6,
@@ -53,19 +54,27 @@ router.get('/', (req, res) => {
      user_id: 2 }
 
    @apiSuccess {Number} id comment id
+   @apiSuccess {String} comment A comment string, or null.
+   @apiSuccess {Number} rating user rating for book
+   @apiSuccess {String} username username
+   @apiSuccess {Number} book_id book id
+   @apiSuccess {Number} user_id user id
    
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
    { id: 5
      rating: 4.6,
      comment: 'It was pretty good',
+     username: 'blevins',
+     title: 'Classical Mechanics'
      book_id: 1,
      user_id: 2 }
    
 */
 
-router.post('/', (req, res) => {
+router.post('/', restricted, (req, res) => {
   const review = req.body;
+  review.user_id = req.token.id;
   if (review && review.rating && review.user_id && review.book_id) {
     Reviews.insert(review)
       .then(review => res.status(201).json(review))
@@ -88,7 +97,12 @@ router.post('/', (req, res) => {
 
    @apiParam {Number} id review id
    
-   @apiSuccess {Object} review an updated review object
+   @apiSuccess {Number} id comment id
+   @apiSuccess {String} comment A comment string, or null.
+   @apiSuccess {Number} rating user rating for book
+   @apiSuccess {String} username username
+   @apiSuccess {Number} book_id book id
+   @apiSuccess {Number} user_id user id
    
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
@@ -101,7 +115,6 @@ router.post('/', (req, res) => {
      username: 'henry'
    }
 */
-
 
 router.get('/:id', (req, res) => {
   const {id} = req.params;
@@ -123,6 +136,7 @@ router.get('/:id', (req, res) => {
    @apiName UpdateReview
    @apiGroup Reviews
    
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number} id review id
    
@@ -132,34 +146,55 @@ router.get('/:id', (req, res) => {
      book_id: 1,
      user_id: 2 }
 
-   @apiSuccess {Object} review a review object
+   @apiSuccess {Number} id comment id
+   @apiSuccess {String} comment A comment string, or null.
+   @apiSuccess {Number} rating user rating for book
+   @apiSuccess {String} username username
+   @apiSuccess {Number} book_id book id
+   @apiSuccess {Number} user_id user id
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 200 OK
    { id: 5
      rating: 0.5,
      comment: 'It is not very good',
+     username: 'blevins',
+     title: 'Classical Mechanics'
      book_id: 1,
      user_id: 2 }
 */
 
-
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const {id} = req.params,
         changes = req.body;
+  const user_id = req.token.id;
   // todo better validation
-  changes.id = undefined;
-  changes.user_id = undefined;
-  changes.book_id = undefined;
+  delete changes.id;
+  delete changes.user_id;
+  delete changes.book_id;
   if (changes && (changes.rating || changes.comment)) {
-    Reviews.update(id, changes)
+    Reviews.get(id)
       .then(review => review
-            ? res.status(200).json(review)
+            ? (review.user_id !== user_id
+               ? res.status(403).json({
+                 message: 'Cannot modify review made by another user'
+               })
+               : Reviews.update(id, changes)
+               .then(review => review
+                     ? res.status(200).json(review)
+                     : res.status(404).json({
+                       message: `Review with id ${id} does not exist`
+                     }))
+               .catch(error => res.status(500).json({
+                 message: 'Error updating review',
+                 error: error.toString()
+               }))
+              )
             : res.status(404).json({
               message: `Review with id ${id} does not exist`
             }))
       .catch(error => res.status(500).json({
-        message: 'Error updating review',
+        message: 'Error getting comment',
         error: error.toString()
       }));
   } else {
@@ -174,6 +209,7 @@ router.put('/:id', (req, res) => {
    @apiName DeleteReview
    @apiGroup Reviews
    
+   @apiHeader {String} Authorization json web token
    
    @apiParam {Number} id review id
    
@@ -181,16 +217,31 @@ router.put('/:id', (req, res) => {
    HTTP/1.1 204 OK
 */
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const {id} = req.params;
-  Reviews.remove(id)
-    .then(removed => removed
-          ? res.status(204).end()
+  const user_id = req.token.id;
+  Reviews.get(id)
+    .then(review => review
+          ? (review.user_id !== user_id
+             ? res.status(403).json({
+               message: 'Cannot delete review made by another user'
+             })
+             : Reviews.remove(id)
+             .then(removed => removed
+                   ? res.status(204).end()
+                   : res.status(404).json({
+                     message: `Review with id ${id} does not exist`
+                   }))
+             .catch(error => res.status(500).json({
+               message: 'Error deleting review',
+               error: error.toString()
+             }))
+            )
           : res.status(404).json({
             message: `Review with id ${id} does not exist`
           }))
     .catch(error => res.status(500).json({
-      message: 'Error deleting review',
+      message: 'Error getting comment',
       error: error.toString()
     }));
 });

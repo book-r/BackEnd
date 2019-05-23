@@ -72,6 +72,63 @@
   },
   {
     "type": "post",
+    "url": "auth/refresh",
+    "title": "Refresh token",
+    "name": "RefreshUser",
+    "group": "Auth",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>user id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>json web token, valid for 24 hours</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/auth.js",
+    "groupTitle": "Auth"
+  },
+  {
+    "type": "post",
     "url": "auth/register",
     "title": "Register user",
     "name": "RegisterUser",
@@ -142,11 +199,94 @@
     "groupTitle": "Auth"
   },
   {
+    "type": "put",
+    "url": "authors/",
+    "title": "Create author",
+    "name": "CreateAuthor",
+    "group": "Authors",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>author id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>author name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 201 OK\n{ id: 1,\n name: 'New Name'\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/authors.js",
+    "groupTitle": "Authors"
+  },
+  {
     "type": "delete",
     "url": "authors/:id",
     "title": "Delete author by id",
     "name": "DeleteAuthor",
     "group": "Authors",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -273,6 +413,19 @@
     "title": "Update author by id",
     "name": "UpdateAuthor",
     "group": "Authors",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -337,6 +490,19 @@
     "title": "Delete book",
     "name": "DeleteBook",
     "group": "Books",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -520,6 +686,19 @@
     "name": "PostBook",
     "group": "Books",
     "description": "<p>Note that this endpoint does not allow for adding authors or subjects to the book. This must be done on the sub endpoints. If there is time, endpoint will gain the functionality.</p>",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -689,6 +868,19 @@
     "title": "Update book",
     "name": "UpdateBook",
     "group": "Books",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -858,6 +1050,19 @@
     "title": "Delete review by id",
     "name": "DeleteReview",
     "group": "Reviews",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -908,10 +1113,45 @@
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Object",
+            "type": "Number",
             "optional": false,
-            "field": "review",
-            "description": "<p>an updated review object</p>"
+            "field": "id",
+            "description": "<p>comment id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>A comment string, or null.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "rating",
+            "description": "<p>user rating for book</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "book_id",
+            "description": "<p>book id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>user id</p>"
           }
         ]
       },
@@ -976,6 +1216,19 @@
     "title": "Post review",
     "name": "PostReview",
     "group": "Reviews",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1000,13 +1253,6 @@
             "optional": false,
             "field": "book_id",
             "description": "<p>book id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "Number",
-            "optional": false,
-            "field": "user_id",
-            "description": "<p>id of user posting. Will be removed after auth is implemented.</p>"
           }
         ]
       },
@@ -1027,13 +1273,48 @@
             "optional": false,
             "field": "id",
             "description": "<p>comment id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>A comment string, or null.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "rating",
+            "description": "<p>user rating for book</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "book_id",
+            "description": "<p>book id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>user id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 4.6,\n  comment: 'It was pretty good',\n  book_id: 1,\n  user_id: 2 }",
+          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 4.6,\n  comment: 'It was pretty good',\n  username: 'blevins',\n  title: 'Classical Mechanics'\n  book_id: 1,\n  user_id: 2 }",
           "type": "json"
         }
       ]
@@ -1048,6 +1329,19 @@
     "title": "Update review by id",
     "name": "UpdateReview",
     "group": "Reviews",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1073,17 +1367,52 @@
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Object",
+            "type": "Number",
             "optional": false,
-            "field": "review",
-            "description": "<p>a review object</p>"
+            "field": "id",
+            "description": "<p>comment id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>A comment string, or null.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "rating",
+            "description": "<p>user rating for book</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "username",
+            "description": "<p>username</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "book_id",
+            "description": "<p>book id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "user_id",
+            "description": "<p>user id</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 0.5,\n  comment: 'It is not very good',\n  book_id: 1,\n  user_id: 2 }",
+          "content": "HTTP/1.1 200 OK\n{ id: 5\n  rating: 0.5,\n  comment: 'It is not very good',\n  username: 'blevins',\n  title: 'Classical Mechanics'\n  book_id: 1,\n  user_id: 2 }",
           "type": "json"
         }
       ]
@@ -1093,11 +1422,94 @@
     "groupTitle": "Reviews"
   },
   {
+    "type": "put",
+    "url": "subjects/",
+    "title": "Create subject",
+    "name": "CreateSubject",
+    "group": "Subjects",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Example Body:",
+          "content": "{ name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>subject id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "name",
+            "description": "<p>subject name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 201 OK\n{ id: 10,\n name: 'New Name' }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/subjects.js",
+    "groupTitle": "Subjects"
+  },
+  {
     "type": "delete",
     "url": "subjects/:id",
     "title": "Delete subject by id",
     "name": "DeleteSubject",
     "group": "Subjects",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -1224,6 +1636,19 @@
     "title": "Update subject by id",
     "name": "UpdateSubject",
     "group": "Subjects",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [

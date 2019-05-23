@@ -1,6 +1,7 @@
 const express = require('express'),
       Subjects = require('../models/subjects.js'),
-      Books = require('../models/books.js');
+      Books = require('../models/books.js'),
+      restricted = require('../middleware/restricted.js');
 
 const router = express.Router();
 
@@ -35,7 +36,28 @@ function validateSubject(subject) {
   }
 }
 
-router.post('/', (req, res) => {
+/**
+   @api {put} subjects/ Create subject 
+   @apiName CreateSubject
+   @apiGroup Subjects
+
+   @apiHeader {String} Authorization json web token
+
+   @apiParam {String} name subject name
+
+   @apiParamExample Example Body:
+   { name: 'New Name' }
+   
+   @apiSuccess {Number} id subject id
+   @apiSuccess {String} name subject name
+
+   @apiSuccessExample Success-reponse:
+   HTTP/1.1 201 OK
+   { id: 10,
+    name: 'New Name' }
+*/
+
+router.post('/', restricted, (req, res) => {
   const subject = req.body,
         valid = validateSubject(subject);
   if (valid === true) {
@@ -103,6 +125,8 @@ router.get('/:id', (req, res) => {
    @apiName UpdateSubject
    @apiGroup Subjects
 
+   @apiHeader {String} Authorization json web token
+
    @apiParam {Number} id subject id
    @apiParam {String} name subject name
 
@@ -118,7 +142,7 @@ router.get('/:id', (req, res) => {
     name: 'New Name' }
 */
 
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const {id} = req.params,
         changes = req.body;
   // todo better validation
@@ -146,13 +170,15 @@ router.put('/:id', (req, res) => {
    @apiName DeleteSubject
    @apiGroup Subjects
 
+   @apiHeader {String} Authorization json web token
+
    @apiParam {Number} id subject id
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 204 OK
 */
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const {id} = req.params;
   Subjects.remove(id)
     .then(removed => removed

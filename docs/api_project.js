@@ -3,13 +3,13 @@ define({
   "version": "0.1.0",
   "description": "apiDocs for Lambda book-r backend",
   "title": "Lambda book-r",
-  "url": "https://lambda-bookr.heroku.com/api/",
+  "url": "https://lambda-bookr.herokuapp.com/api/",
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2019-05-22T16:06:23.968Z",
+    "time": "2019-05-23T00:17:06.891Z",
     "url": "http://apidocjs.com",
     "version": "0.17.7"
   }

@@ -1,5 +1,6 @@
 const express = require('express'),
-      Books = require('../models/books.js');
+      Books = require('../models/books.js'),
+      restricted = require('../middleware/restricted.js');
 
 const router = express.Router();
 
@@ -46,6 +47,8 @@ router.get('/', (req, res) => {
    @apiDescription Note that this endpoint does not allow for adding authors or
    subjects to the book. This must be done on the sub endpoints. If there is
    time, endpoint will gain the functionality.
+
+   @apiHeader {String} Authorization json web token
 
    @apiParam {String} title book title
    @apiParam {String} isbn isbn 13 string with no formatting
@@ -98,7 +101,7 @@ router.get('/', (req, res) => {
    
 */
 
-router.post('/', (req, res) => {
+router.post('/', restricted, (req, res) => {
   const book = req.body;
   if (true /* TODO: validate book */) {
     Books.insert(book)
@@ -118,6 +121,8 @@ router.post('/', (req, res) => {
    @api {get} books/:id Update book 
    @apiName UpdateBook
    @apiGroup Books
+   
+   @apiHeader {String} Authorization json web token
    
    @apiParam {String} title book title
    @apiParam {String} isbn isbn 13 string with no formatting
@@ -164,7 +169,7 @@ router.post('/', (req, res) => {
    
 */
 
-router.put('/:id', (req, res) => {
+router.put('/:id', restricted, (req, res) => {
   const changes = req.body,
         {id} = req.params;
   if (true /* TODO: validate changes */) {
@@ -246,13 +251,15 @@ router.get('/:id', (req, res) => {
    @apiName DeleteBook
    @apiGroup Books
    
+   @apiHeader {String} Authorization json web token
+
    @apiParam {Number} id book id
    
    @apiSuccessExample Success-reponse:
    HTTP/1.1 204 OK
 */
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
   const {id} = req.params;
   Books.remove(id)
     .then(removed => removed
