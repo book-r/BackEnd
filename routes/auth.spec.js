@@ -6,8 +6,6 @@ const request = require('supertest'),
       prepBeforeEach = require('../helpers/prepBeforeEach.js'),
       restricted = require('../middleware/restricted.js');
 
-// jest.mock('../middleware/restricted.js');
-
 // require.requireActual('../middleware/restricted.js') ;
 
 describe('auth /api/auth', () => {
@@ -42,7 +40,6 @@ describe('auth /api/auth', () => {
     it('login new user', async () => {
       const newUser = {username: 'test98098', password: 'test'};
       const res = await request(server).post('/api/auth/register').send(newUser);
-      console.log(res.status, res.body);
       const {body} = await request(server).post('/api/auth/login').send(newUser);
       const token = body.token;
       expect(jwt.verify(token, secrets.jwt));

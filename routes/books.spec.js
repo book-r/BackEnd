@@ -148,7 +148,6 @@ describe('books /api/books', () => {
                     };
     it('success', async () => {
       const {status, body} = await request(server).post('/api/books/').send(newBook);
-      console.log(body);
       expect(status).toBe(201);
       const res = await request(server).delete('/api/books/' + body.id);
       expect(res.status).toBe(204);
