@@ -44,8 +44,16 @@ describe('reviews /api/reviews', () => {
     });
   });
   describe('post /api/reviews/', () => {
-    const newReview = {rating: 4.6, comment: 'It was pretty good', book_id: 1, user_id: 2};
-    const expectedReview = {...newReview, title: 'Classical Mechanics', username: 'blevins'};
+    // jest.mock('../middleware/restricted.js', () => (req, res, next) => req.token = {user_id: 2} );
+    restricted.mockImplementationOnce((req, res, next) => {
+      req.token = {id: 2};
+      next();
+    }).mockImplementationOnce((req, res, next) => {
+      req.token = {id: 2};
+      next();
+    });
+    const newReview = {rating: 4.6, comment: 'It was pretty good', book_id: 1};
+    const expectedReview = {...newReview, user_id: 2, title: 'Classical Mechanics', username: 'blevins'};
     it('success', async () => {
       const {status} = await request(server).post('/api/reviews/').send(newReview);
       expect(status).toEqual(201);
@@ -81,26 +89,62 @@ describe('reviews /api/reviews', () => {
     const newReview = {rating: 4.6, comment: 'It was pretty good'};
     const expectedReview = {...newReview, book_id: 1, user_id: 1, id: 1, title: 'Classical Mechanics', username: 'henry'};
     it('success', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
       const {status} = await request(server).put('/api/reviews/1').send(newReview);
       expect(status).toEqual(200);
     });
     it('failure', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
       const {status} = await request(server).put('/api/reviews/123123123').send(newReview);
       expect(status).toEqual(404);
     });
     it('contents', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
       const {body} = await request(server).put('/api/reviews/1').send(newReview);
       expect(body).toEqual(expectedReview);
+    });
+    it('failure other users comment', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 20};
+        next();
+      });
+      const {status} = await request(server).put('/api/reviews/1').send(newReview);
+      expect(status).toBe(403);
     });
   });
   describe('delete by id', () => {
     it('success', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
       const {status} = await request(server).delete('/api/reviews/1');
       expect(status).toEqual(204);
     });
     it('failure', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
       const {status} = await request(server).delete('/api/reviews/123123123');
       expect(status).toEqual(404);
+    });
+    it('failure other users comment', async () => {
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 20};
+        next();
+      });
+      const {status} = await request(server).delete('/api/reviews/1');
+      expect(status).toEqual(403);
     });
   });
 });
