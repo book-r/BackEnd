@@ -18,7 +18,7 @@ exports.up = function(knex, Promise) {
       tbl
         .string('cover_url')
         .notNullable();
-      tbl.string('description');
+      tbl.text('description');
       tbl.string('edition');
       tbl
         .integer('year')
@@ -114,6 +114,7 @@ exports.up = function(knex, Promise) {
         .inTable('users')
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
+      tbl.unique(['user_id', 'book_id'], 'unique_review_per_book');
     });
   ;
 };

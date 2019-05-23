@@ -45,20 +45,26 @@ describe('reviews /api/reviews', () => {
   });
   describe('post /api/reviews/', () => {
     // jest.mock('../middleware/restricted.js', () => (req, res, next) => req.token = {user_id: 2} );
-    restricted.mockImplementationOnce((req, res, next) => {
-      req.token = {id: 2};
-      next();
-    }).mockImplementationOnce((req, res, next) => {
-      req.token = {id: 2};
-      next();
-    });
     const newReview = {rating: 4.6, comment: 'It was pretty good', book_id: 1};
-    const expectedReview = {...newReview, user_id: 2, title: 'Classical Mechanics', username: 'blevins'};
+    const expectedReview = {...newReview, user_id: 3, title: 'Classical Mechanics', username:  'test123123asdasd'};
     it('success', async () => {
+      const newUser = {username: 'asldjkalskdj', password: 'test'};
+      const res = await request(server).post('/api/auth/register').send(newUser);
+      console.log("herea", res.body);
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 3};
+        next();
+      });
       const {status} = await request(server).post('/api/reviews/').send(newReview);
       expect(status).toEqual(201);
     });
     it('contents', async () => {
+      const newUser = {username: 'test123123asdasd', password: 'test'};
+      const res = await request(server).post('/api/auth/register').send(newUser);
+      restricted.mockImplementation((req, res, next) => {
+        req.token = {id: 3};
+        next();
+      });
       const {body} = await request(server).post('/api/reviews/').send(newReview);
       delete body.id;
       expect(body).toEqual(expectedReview);
