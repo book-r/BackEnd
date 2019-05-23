@@ -1,6 +1,7 @@
 const express = require('express'),
       Books = require('../models/books.js'),
-      restricted = require('../middleware/restricted.js');
+      restricted = require('../middleware/restricted.js'),
+      setToken = require('../middleware/setToken.js');
 
 const router = express.Router();
 
@@ -40,7 +41,7 @@ router.get('/', (req, res) => {
 });
 
 /**
-   @api {get} books/:id Add book 
+   @api {post} books/:id Add book 
    @apiName PostBook
    @apiGroup Books
    
@@ -118,7 +119,7 @@ router.post('/', restricted, (req, res) => {
 });
 
 /**
-   @api {get} books/:id Update book 
+   @api {put} books/:id Update book 
    @apiName UpdateBook
    @apiGroup Books
    
@@ -195,6 +196,8 @@ router.put('/:id', restricted, (req, res) => {
    @apiName GetBook
    @apiGroup Books
 
+   @apiHeader {String} Authorization json web token (only needed if you want user_rating)
+
    @apiParam {Number} id book id
    
    @apiSuccess {Number} id book id
@@ -205,6 +208,7 @@ router.put('/:id', restricted, (req, res) => {
    @apiSuccess {Number} average The average rating of the book. Null if there are no ratings.
    @apiSuccess {String} edition book edition
    @apiSuccess {Number} year year published
+   @apiSuccess {Number} user_rating User review rating or null (only if logged in)
    @apiSuccess {Number} publisher_id publisher id
    @apiSuccess {String} publisher publisher name
    @apiSuccess {Array} authors array of author objects
@@ -221,6 +225,7 @@ router.put('/:id', restricted, (req, res) => {
      average: 4.25,
      edition: '1',
      year: 2005,
+     user_rating: 5.00,
      publisher_id: 1,
      created_at: null,
      updated_at: null,
@@ -232,9 +237,11 @@ router.put('/:id', restricted, (req, res) => {
      { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }
 */
 
-router.get('/:id', (req, res) => {
+router.get('/:id', setToken, (req, res) => {
   const {id} = req.params;
-  Books.get(id)
+  const user_id = (req.token && req.token.id);
+  console.log(req.token, user_id);
+  Books.get(id, user_id)
     .then(book => book
           ? res.status(200).json(book)
           : res.status(404).json({
@@ -247,7 +254,7 @@ router.get('/:id', (req, res) => {
 });
 
 /**
-   @api {get} books/:id Delete book 
+   @api {delete} books/:id Delete book 
    @apiName DeleteBook
    @apiGroup Books
    

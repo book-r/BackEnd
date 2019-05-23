@@ -2,9 +2,11 @@ const request = require('supertest'),
       server = require('../server.js'),
       db = require('../data/dbConfig.js'),
       prepBeforeEach = require('../helpers/prepBeforeEach.js'),
-      restricted = require('../middleware/restricted.js');
+      restricted = require('../middleware/restricted.js'),
+      setToken = require('../middleware/setToken.js');
 
 jest.mock('../middleware/restricted.js');
+jest.mock('../middleware/setToken.js');
 
 describe('books /api/books', () => {
   beforeEach(done => prepBeforeEach(done));
@@ -33,53 +35,62 @@ describe('books /api/books', () => {
   });
 
   describe('get by id', () => {
+    const seed = { id: 1,
+                   title: 'Classical Mechanics',
+                   isbn: '9781891389221',
+                   cover_url: 'https://www.uscibooks.com/taycm.jpg',
+                   description:
+                   'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
+                   average: 4.25,
+                   edition: '1',
+                   year: 2005,
+                   publisher_id: 1,
+                   created_at: null,
+                   updated_at: null,
+                   authors: [
+                     {
+                       id: 1,
+                       name: "John R. Taylor",
+                     },
+                   ],
+                   subjects: [
+                     {
+                       id: 1,
+                       name: "Physics",
+                     },
+                   ],
+                   publisher: 'University Science Books',
+                   reviews:
+                   [ { id: 1,
+                       rating: 5,
+                       comment: 'Good book!',
+                       book_id: 1,
+                       user_id: 1,
+                       title: 'Classical Mechanics',
+                       username: 'henry' },
+                     { id: 2,
+                       rating: 3.5,
+                       comment: 'Love the cover',
+                       book_id: 1,
+                       user_id: 2,
+                       title: 'Classical Mechanics',
+                       username: 'blevins' } ] };
     it('success', async () => {
       const {status} = await request(server).get('/api/books/1');
       expect(status).toBe(200);
     });
     it('content', async () => {
       const {body} = await request(server).get('/api/books/1');
-      const seed = { id: 1,
-                     title: 'Classical Mechanics',
-                     isbn: '9781891389221',
-                     cover_url: 'https://www.uscibooks.com/taycm.jpg',
-                     description:
-                     'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
-                     average: 4.25,
-                     edition: '1',
-                     year: 2005,
-                     publisher_id: 1,
-                     created_at: null,
-                     updated_at: null,
-                     authors: [
-                       {
-                         id: 1,
-                         name: "John R. Taylor",
-                       },
-                     ],
-                     subjects: [
-                       {
-                         id: 1,
-                         name: "Physics",
-                       },
-                     ],
-                     publisher: 'University Science Books',
-                     reviews:
-                     [ { id: 1,
-                         rating: 5,
-                         comment: 'Good book!',
-                         book_id: 1,
-                         user_id: 1,
-                         title: 'Classical Mechanics',
-                         username: 'henry' },
-                       { id: 2,
-                         rating: 3.5,
-                         comment: 'Love the cover',
-                         book_id: 1,
-                         user_id: 2,
-                         title: 'Classical Mechanics',
-                         username: 'blevins' } ] };
       expect(body).toEqual(seed);
+    });
+    it('content with user_rating', async () => {
+      setToken.mockImplementation((req, res, next) => {
+        req.token = {id: 1};
+        next();
+      });
+      console.log('this is it');
+      const {body} = await request(server).get('/api/books/1');
+      expect(body).toEqual({...seed, user_rating: 5});
     });
     it('failure', async () => {
       const {status} = await request(server).get('/api/books/1231231');
@@ -119,9 +130,9 @@ describe('books /api/books', () => {
   });
   describe('put', () => {
     const changes = { 
-                      title: 'Better Title',
-                      isbn: '9999999999999',
-                    };
+      title: 'Better Title',
+      isbn: '9999999999999',
+    };
     it('success', async () => {
       const {status, body} = await request(server).put('/api/books/1').send(changes);
       expect(status).toBe(200);

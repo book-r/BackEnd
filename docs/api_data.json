@@ -26,7 +26,7 @@
       },
       "examples": [
         {
-          "title": "{ username: 'test',",
+          "title": "Example Body:",
           "content": "{ username: 'test',\n  password: 'password' }",
           "type": "json"
         }
@@ -154,7 +154,7 @@
       },
       "examples": [
         {
-          "title": "{ username: 'test',",
+          "title": "Example Body:",
           "content": "{ username: 'test',\n  password: 'password' }",
           "type": "json"
         }
@@ -199,10 +199,10 @@
     "groupTitle": "Auth"
   },
   {
-    "type": "put",
+    "type": "post",
     "url": "authors/",
-    "title": "Create author",
-    "name": "CreateAuthor",
+    "title": "Add author",
+    "name": "AddAuthor",
     "group": "Authors",
     "header": {
       "fields": {
@@ -259,7 +259,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 201 OK\n{ id: 1,\n name: 'New Name'\n}",
+          "content": "HTTP/1.1 201 OK\n{ id: 1,\n name: 'New Name' }",
           "type": "json"
         }
       ]
@@ -485,7 +485,7 @@
     "groupTitle": "Authors"
   },
   {
-    "type": "get",
+    "type": "delete",
     "url": "books/:id",
     "title": "Delete book",
     "name": "DeleteBook",
@@ -535,6 +535,19 @@
     "title": "Request book by id",
     "name": "GetBook",
     "group": "Books",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token (only needed if you want user_rating)</p>"
+          }
+        ]
+      }
+    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -611,6 +624,13 @@
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "user_rating",
+            "description": "<p>User review rating or null (only if logged in)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "publisher_id",
             "description": "<p>publisher id</p>"
           },
@@ -640,7 +660,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\",},],\n  subjects: [{id: 1, name: \"Physics\",},],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics',\n  isbn: '9781891389221',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  user_rating: 5.00,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  publisher: 'University Science Books',\n  authors: [{id: 1, name: \"John R. Taylor\",},],\n  subjects: [{id: 1, name: \"Physics\",},],\n  reviews:\n  [ { id: 1, rating: 5, comment: 'Good book!', book_id: 1, user_id: 1, title: 'Classical Mechanics', username: 'henry' },\n  { id: 2, rating: 3.5, comment: 'Love the cover', book_id: 1, user_id: 2, title: 'Classical Mechanics', username: 'blevins' } ] }",
           "type": "json"
         }
       ]
@@ -680,7 +700,7 @@
     "groupTitle": "Books"
   },
   {
-    "type": "get",
+    "type": "post",
     "url": "books/:id",
     "title": "Add book",
     "name": "PostBook",
@@ -863,7 +883,7 @@
     "groupTitle": "Books"
   },
   {
-    "type": "get",
+    "type": "put",
     "url": "books/:id",
     "title": "Update book",
     "name": "UpdateBook",
@@ -1050,6 +1070,7 @@
     "title": "Delete review by id",
     "name": "DeleteReview",
     "group": "Reviews",
+    "description": "<p>Only the user who made the review may delete it.</p>",
     "header": {
       "fields": {
         "Header": [
@@ -1329,6 +1350,7 @@
     "title": "Update review by id",
     "name": "UpdateReview",
     "group": "Reviews",
+    "description": "<p>Only the user who made the review may update it.</p>",
     "header": {
       "fields": {
         "Header": [
@@ -1422,9 +1444,9 @@
     "groupTitle": "Reviews"
   },
   {
-    "type": "put",
+    "type": "post",
     "url": "subjects/",
-    "title": "Create subject",
+    "title": "Add subject",
     "name": "CreateSubject",
     "group": "Subjects",
     "header": {

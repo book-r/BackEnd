@@ -37,7 +37,7 @@ function validateSubject(subject) {
 }
 
 /**
-   @api {put} subjects/ Create subject 
+   @api {post} subjects/ Add subject 
    @apiName CreateSubject
    @apiGroup Subjects
 

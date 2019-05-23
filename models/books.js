@@ -12,9 +12,9 @@ module.exports = {
   withSubject
 };
 
-function get(id) {
+function get(id, user_id) {
   const query = db('books')
-        .select(['id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'publisher'])
+        .select(['id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'publisher'].concat(user_id ? ['user_rating'] : []))
         .with('p', qb => {
           qb.select('publisher', 'id as publisher_id').from('publishers');
         })
@@ -27,7 +27,12 @@ function get(id) {
         .groupBy('id', 'publisher');
   if (id) {
     return Promise.all([
-      query.where({'books.id': id}).first(),
+      query
+        .with('ur', qb => {
+          qb.select('rating as user_rating', 'user_id').from('reviews').where({'book_id': id});
+        })
+        .leftJoin('ur', 'ur.user_id', user_id || 0)
+        .where({'books.id': id}).first(),
       Reviews.getBy({'book_id': id}),
       Authors.ofBook(id),
       Subjects.ofBook(id)
