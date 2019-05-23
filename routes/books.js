@@ -24,6 +24,7 @@ const router = express.Router();
      average: 4.25,
      edition: '1',
      year: 2005,
+     featured: true,
      publisher_id: 1,
      created_at: null,
      updated_at: null,
@@ -57,6 +58,7 @@ router.get('/', (req, res) => {
    @apiParam {String} description book description
    @apiParam {String} edition book edition
    @apiParam {Number} year year published
+   @apiSuccess {Bool} featured featured
    @apiParam {Number} publisher_id publisher id
 
    @apiParamExample Example Body:
@@ -78,6 +80,7 @@ router.get('/', (req, res) => {
    @apiSuccess {Number} average The average rating of the book. Null if there are no ratings.
    @apiSuccess {String} edition book edition
    @apiSuccess {Number} year year published
+   @apiSuccess {Bool} featured featured
    @apiSuccess {Number} publisher_id publisher id
    @apiSuccess {String} publisher publisher name
    @apiSuccess {Array} authors array of author objects
@@ -94,6 +97,7 @@ router.get('/', (req, res) => {
      average: 4.25,
      edition: '1',
      year: 2005,
+     featured: true,
      publisher_id: 1,
      created_at: null,
      updated_at: null,
@@ -131,6 +135,7 @@ router.post('/', restricted, (req, res) => {
    @apiParam {String} description book description
    @apiParam {String} edition book edition
    @apiParam {Number} year year published
+   @apiSuccess {Bool} featured featured
    @apiParam {Number} publisher_id publisher id
 
    @apiParamExample Example Body:
@@ -146,6 +151,7 @@ router.post('/', restricted, (req, res) => {
    @apiSuccess {Number} average The average rating of the book. Null if there are no ratings.
    @apiSuccess {String} edition book edition
    @apiSuccess {Number} year year published
+   @apiSuccess {Bool} featured featured
    @apiSuccess {Number} publisher_id publisher id
    @apiSuccess {String} publisher publisher name
    @apiSuccess {Array} authors array of author objects
@@ -162,6 +168,7 @@ router.post('/', restricted, (req, res) => {
      average: 4.25,
      edition: '1',
      year: 2005,
+     featured: false,
      publisher_id: 1,
      created_at: null,
      updated_at: null,
@@ -208,6 +215,7 @@ router.put('/:id', restricted, (req, res) => {
    @apiSuccess {Number} average The average rating of the book. Null if there are no ratings.
    @apiSuccess {String} edition book edition
    @apiSuccess {Number} year year published
+   @apiSuccess {Bool} featured featured
    @apiSuccess {Number} user_rating User review rating or null (only if logged in)
    @apiSuccess {Number} publisher_id publisher id
    @apiSuccess {String} publisher publisher name
@@ -226,6 +234,7 @@ router.put('/:id', restricted, (req, res) => {
      edition: '1',
      year: 2005,
      user_rating: 5.00,
+     featured: true,
      publisher_id: 1,
      created_at: null,
      updated_at: null,
@@ -240,7 +249,6 @@ router.put('/:id', restricted, (req, res) => {
 router.get('/:id', setToken, (req, res) => {
   const {id} = req.params;
   const user_id = (req.token && req.token.id);
-  console.log(req.token, user_id);
   Books.get(id, user_id)
     .then(book => book
           ? res.status(200).json(book)

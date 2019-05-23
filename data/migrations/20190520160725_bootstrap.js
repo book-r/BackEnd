@@ -25,6 +25,8 @@ exports.up = function(knex, Promise) {
         .unsigned()
         .notNullable();
       tbl
+        .boolean('featured');
+      tbl
         .integer('publisher_id')
         .notNullable()
         .references('id')

@@ -7,6 +7,7 @@ exports.seed = function(knex, Promise) {
         cover_url: 'https://www.uscibooks.com/taycm.jpg',
         publisher_id: 1,
         edition: "1",
+        featured: true,
         year: 2005,
         description: "John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text."
       },

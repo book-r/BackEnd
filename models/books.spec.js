@@ -15,6 +15,7 @@ describe('books model', () => {
                        'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',
                        average: 4.25,
                        edition: '1',
+                       featured: true,
                        year: 2005,
                        publisher_id: 1,
                        created_at: null,
@@ -33,6 +34,7 @@ describe('books model', () => {
                      average: 4.25,
                      edition: '1',
                      year: 2005,
+                     featured: true,
                      publisher_id: 1,
                      created_at: null,
                      updated_at: null,
@@ -81,6 +83,7 @@ describe('books model', () => {
       const book = await Books.insert(newBook);
       const expectedBook = { ...newBook,
                              id: 2,
+                             featured: null,
                              publisher: "University Science Books",
                              created_at: null,
                              updated_at: null,
@@ -95,7 +98,19 @@ describe('books model', () => {
   describe('withAuthor', () => {
     it('sucess', async () => {
       const books = await Books.withAuthor(1);
-      expect(books).toEqual([{"average": 4.25, "cover_url": "https://www.uscibooks.com/taycm.jpg", "created_at": null, "description": "John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.", "edition": "1", "id": 1, "isbn": "9781891389221", "publisher": "University Science Books", "publisher_id": 1, "title": "Classical Mechanics", "updated_at": null, "year": 2005}]);
+      expect(books).toEqual([{average: 4.25,
+                              cover_url: "https://www.uscibooks.com/taycm.jpg",
+                              created_at: null,
+                              description: "John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.",
+                              edition: "1",
+                              id: 1,
+                              isbn: "9781891389221",
+                              publisher: "University Science Books",
+                              publisher_id: 1,
+                              featured: true,
+                              title: "Classical Mechanics",
+                              updated_at: null,
+                              year: 2005}]);
     });
   });
 });
