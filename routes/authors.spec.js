@@ -45,6 +45,8 @@ describe('authors /api/authors', () => {
                                  created_at: null,
                                  updated_at: null,
                                  publisher: 'University Science Books',
+                                 subjects: [{id: 1, name: 'Physics'}],
+                                 authors: [{id: 1, name: 'John R. Taylor'}],
                                  average: 4.25 } ] });
     });
   });
