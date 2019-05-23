@@ -182,8 +182,8 @@ router.post('/', restricted, (req, res) => {
      publisher_id: 1,
      created_at: null,
      updated_at: null,
-     subjects: [{}],
-     authors: [{}],
+     subjects: null,
+     authors: null,
      publisher: 'University Science Books',
    }
    

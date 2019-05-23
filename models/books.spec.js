@@ -81,9 +81,9 @@ describe('books model', () => {
                              created_at: null,
                              updated_at: null,
                              average: null,
-                             authors: [{}],
+                             authors: null,
                              reviews: [],
-                             subjects: [{}],
+                             subjects: null,
                              user_review: null,
                            };
       expect(book).toEqual(expectedBook);
