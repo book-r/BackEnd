@@ -531,6 +531,62 @@
   },
   {
     "type": "get",
+    "url": "books/:id/reviews",
+    "title": "Get book reviews",
+    "name": "DeleteBook",
+    "group": "Books",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Authorization",
+            "description": "<p>json web token</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id",
+            "description": "<p>book id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "reviews",
+            "description": "<p>book review array</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-reponse:",
+          "content": "HTTP/1.1 200 OK\n[\n  {\n    \"id\": 1,\n    \"title\": \"Classical Mechanics\",\n    \"username\": \"henry\",\n    \"book_id\": 1,\n    \"user_id\": 1,\n    \"rating\": 5,\n    \"comment\": \"Good book!\"\n  },\n  {\n    \"id\": 2,\n    \"title\": \"Classical Mechanics\",\n    \"username\": \"blevins\",\n    \"book_id\": 1,\n    \"user_id\": 2,\n    \"rating\": 3.5,\n    \"comment\": \"Love the cover\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "routes/books.js",
+    "groupTitle": "Books"
+  },
+  {
+    "type": "get",
     "url": "books/:id",
     "title": "Request book by id",
     "name": "GetBook",
