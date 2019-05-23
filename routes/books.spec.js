@@ -125,9 +125,9 @@ describe('books /api/books', () => {
                              average: null,
                              created_at: null,
                              updated_at: null,
-                             authors: [{}],
+                             authors: null,
                              reviews: [],
-                             subjects: [{}],
+                             subjects: null,
                              user_review: null,
                            };
       expect(body).toEqual(expectedBook);

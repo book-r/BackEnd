@@ -1152,7 +1152,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics Part 2',\n  isbn: '9999999999999',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: false,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  subjects: [{}],\n  authors: [{}],\n  publisher: 'University Science Books',\n}",
+          "content": "HTTP/1.1 200 OK\n{ id: 1,\n  title: 'Classical Mechanics Part 2',\n  isbn: '9999999999999',\n  cover_url: 'https://www.uscibooks.com/taycm.jpg',\n  description:\n  'John Taylor has brought to his most recent book, Classical Mechanics, all of the clarity and insight that made his Introduction to Error Analysis a best-selling text.',\n  average: 4.25,\n  edition: '1',\n  year: 2005,\n  featured: false,\n  publisher_id: 1,\n  created_at: null,\n  updated_at: null,\n  subjects: null,\n  authors: null,\n  publisher: 'University Science Books',\n}",
           "type": "json"
         }
       ]

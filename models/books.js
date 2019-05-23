@@ -15,10 +15,7 @@ module.exports = {
 
 function get(id, user_id) {
   const query = db('books')
-        .select(['books.id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'featured', 'publisher', 'average',
-                 db.raw('json_strip_nulls(json_agg(json_build_object(\'id\', a.author_id, \'name\', a.author_name))) as authors'),
-                 db.raw('json_strip_nulls(json_agg(json_build_object(\'id\', s.subject_id, \'name\', s.subject_name))) as subjects')
-                ])
+        .select(['books.id', 'title', 'isbn', 'cover_url', 'description', 'edition', 'year', 'books.publisher_id', 'created_at', 'updated_at', 'featured', 'publisher', 'average', 'authors', 'subjects'])
         .with('p', qb => {
           qb.select('publisher', 'id as publisher_id').from('publishers');
         })
@@ -31,23 +28,24 @@ function get(id, user_id) {
         })
         .with('a', qb => {
           qb
-            .select('authors.id as author_id', 'authors.name as author_name', 'books_authors.book_id')
+            .select('books_authors.book_id',
+                 db.raw('json_strip_nulls(json_agg(json_build_object(\'id\', authors.id, \'name\', authors.name))) as authors'))
             .from('books_authors')
             .join('authors', 'books_authors.author_id', 'authors.id')
-            .distinct();
+            .groupBy(['books_authors.book_id']);
         })
         .with('s', qb => {
           qb
-            .select('books_subjects.subject_id', 'subjects.name as subject_name', 'books_subjects.book_id')
+            .select('books_subjects.book_id',
+                 db.raw('json_strip_nulls(json_agg(json_build_object(\'id\', subjects.id, \'name\', subjects.name))) as subjects'))
             .from('books_subjects')
             .join('subjects', 'books_subjects.subject_id', 'subjects.id')
-            .distinct();
+            .groupBy(['books_subjects.book_id']);
         })
         .join('p', 'p.publisher_id', 'books.publisher_id')
         .leftJoin('avg', 'avg.book_id', 'books.id')
         .leftJoin('a', 'a.book_id', 'books.id')
-        .leftJoin('s', 's.book_id', 'books.id')
-        .groupBy(['id', 'publisher', 'a.author_id', 'avg.average']);
+        .leftJoin('s', 's.book_id', 'books.id');
   if (id) {
     return Promise.all([
       query
@@ -83,20 +81,20 @@ function remove(id) {
 
 function withAuthor(author_id) {
   return get()
-    // .with('ba', qb => {
-    //   qb.select('book_id', 'author_id').from('books_authors');
-    // })
-    // .join('ba', 'ba.book_id', 'books.id')
-    .where({author_id});
+    .with('ba', qb => {
+      qb.select('book_id', 'author_id').from('books_authors');
+    })
+    .join('ba', 'ba.book_id', 'books.id')
+    .where({'ba.author_id': author_id});
 }
 
 function withSubject(subject_id) {
   return get()
-    // .with('bs', qb => {
-    //   qb.select('book_id', 'subject_id').from('books_subjects');
-    // })
-    // .join('bs', 'bs.book_id', 'books.id')
-    .where({subject_id});
+    .with('bs', qb => {
+      qb.select('book_id', 'subject_id').from('books_subjects');
+    })
+    .join('bs', 'bs.book_id', 'books.id')
+    .where({'bs.subject_id': subject_id});
 }
 
 function getFeatured() {
