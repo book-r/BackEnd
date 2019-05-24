@@ -27,7 +27,7 @@ exports.seed = function(knex, Promise) {
       {
         title: 'Cognitive Science: An Introduction to the Science of the Mind',
         isbn: '9780521882002',
-        cover_url: 'http://covers.openlibrary.org/b/isbn/9780521882002-L.jpg',
+        cover_url: 'https://i.imgur.com/hfffR97.jpg',
         publisher_id: 2,
         edition: "0",
         year: 2010,
@@ -82,7 +82,7 @@ exports.seed = function(knex, Promise) {
       {
         title: 'Web Development with Clojure: Build Bulletproof Web Apps with Less Code',
         isbn: '9781680500820',
-        cover_url: 'https://i.imgur.com/qN5lLHl.png',
+        cover_url: 'https://i.imgur.com/4iqzv5R.jpg',
         publisher_id: 5,
         edition: "2",
         year: 2016,
