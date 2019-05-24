@@ -9,15 +9,25 @@ module.exports = {
 };
 
 function get(id) {
+  const query = db('users')
+        .select('users.*', 'roles')
+        .with('r', qb => {
+          qb
+            .select('users_roles.user_id', db.raw('json_agg(roles.name) as roles'))
+            .from('users_roles')
+            .leftJoin('roles', 'roles.id', 'users_roles.role_id')
+            .groupBy(['users_roles.user_id']);
+        })
+        .leftJoin('r', 'r.user_id', 'users.id');
   if (id) {
-    return db('users').where({id}).first();
+    return query.where({id}).first();
   } else {
-    return db('users');
+    return query;
   }
 }
 
 function getBy(whereObj) {
-  return db('users').where(whereObj);
+  return get().where(whereObj);
 }
 
 function insert(user) {

@@ -21,12 +21,14 @@ const router = express.Router();
    
    @apiSuccess {Number} id user id
    @apiSuccess {String} username username
+   @apiSuccess {Array} roles all user roles. Null if there are no roles.
    @apiSuccess {String} token json web token, valid for 24 hours
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 201 OK
    { id: 3,
      username: 'test',
+     roles: null,
      token:
      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }
 */
@@ -67,12 +69,14 @@ router.post('/register', (req, res) => {
    
    @apiSuccess {Number} id user id
    @apiSuccess {String} username username
+   @apiSuccess {Array} roles all user roles. Null if there are no roles.
    @apiSuccess {String} token json web token, valid for 24 hours
 
    @apiSuccessExample Success-reponse:
    HTTP/1.1 201 OK
-   { id: 3,
-     username: 'test',
+   { id: 1,
+     username: 'henry',
+     roles: ['admin'],
      token:
      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }
 */
@@ -119,6 +123,7 @@ router.post('/login', (req, res) => {
    HTTP/1.1 201 OK
    { id: 3,
      username: 'test',
+     roles: null,
      token:
      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }
 */

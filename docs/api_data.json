@@ -51,6 +51,13 @@
           },
           {
             "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "roles",
+            "description": "<p>all user roles. Null if there are no roles.</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "token",
@@ -61,7 +68,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
+          "content": "HTTP/1.1 201 OK\n{ id: 1,\n  username: 'henry',\n  roles: ['admin'],\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
           "type": "json"
         }
       ]
@@ -118,7 +125,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
+          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  roles: null,\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
           "type": "json"
         }
       ]
@@ -179,6 +186,13 @@
           },
           {
             "group": "Success 200",
+            "type": "Array",
+            "optional": false,
+            "field": "roles",
+            "description": "<p>all user roles. Null if there are no roles.</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "token",
@@ -189,7 +203,7 @@
       "examples": [
         {
           "title": "Success-reponse:",
-          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
+          "content": "HTTP/1.1 201 OK\n{ id: 3,\n  username: 'test',\n  roles: null,\n  token:\n  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiY3JlYXRlZF9hdCI6bnVsbCwidXBkYXRlZF9hdCI6bnVsbCwidXNlcm5hbWUiOiJ0ZXN0IiwiaWF0IjoxNTU4NTQwODY2LCJleHAiOjE1NTg1NDQ0NjZ9.ZfXu0mKSPJYYbuw0ebkAJ6KzJIZnLWxxQKJo7euXj3s' }",
           "type": "json"
         }
       ]

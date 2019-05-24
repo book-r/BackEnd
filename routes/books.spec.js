@@ -153,6 +153,10 @@ describe('books /api/books', () => {
     });
   });
   describe('delete', () => {
+    restricted.mockImplementation((req, res, next) => {
+      req.token = {id: 1, roles: ['admin']};
+      next();
+    });
     const newBook = { title: 'Quantum Mechanics 100',
                       isbn: '9780131118928',
                       cover_url: 'http://covers.openlibrary.org/b/isbn/9780131118928-L.jpg',

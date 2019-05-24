@@ -18,6 +18,7 @@ describe('auth /api/auth', () => {
       expect(jwt.verify(token, secrets.jwt));
       body.token = undefined;
       expect(body.username).toEqual(newUser.username);
+      expect(body.roles).toEqual(null);
     });
     it('error', async () => {
       const {status} = await request(server).post('/api/auth/register').send({username: 'abc'});
@@ -26,12 +27,13 @@ describe('auth /api/auth', () => {
   });
   describe('login /login', () => {
     it('login existing user', async () => {
-      const existingUser = {username: 'henry', password: 'test'};
+      const existingUser = {username: 'henry', password: 'test', roles: ['admin']};
       const {body} = await request(server).post('/api/auth/login').send(existingUser);
       const token = body.token;
       expect(jwt.verify(token, secrets.jwt));
       body.token = undefined;
       expect(body.username).toEqual(existingUser.username);
+      expect(body.roles).toEqual(existingUser.roles);
     });
     it('error', async () => {
       const {status} = await request(server).post('/api/auth/login').send({username: 'abc'});

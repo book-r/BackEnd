@@ -2,6 +2,7 @@ const express = require('express'),
       Books = require('../models/books.js'),
       restricted = require('../middleware/restricted.js'),
       setToken = require('../middleware/setToken.js'),
+      roles = require('../middleware/roles.js'),
       Reviews = require('../models/reviews.js');
 
 const router = express.Router();
@@ -294,7 +295,7 @@ router.get('/:id', setToken, (req, res) => {
    HTTP/1.1 204 OK
 */
 
-router.delete('/:id', restricted, (req, res) => {
+router.delete('/:id', restricted, roles(['admin']), (req, res) => {
   const {id} = req.params;
   Books.remove(id)
     .then(removed => removed
