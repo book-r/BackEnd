@@ -2,10 +2,16 @@
   This the backend server for the Lambda School book-r build week project.
 
 ** API Documentation
-   Coming soon
+   https://lambda-bookr.herokuapp.com/api/
    
-** How to run locally
-   To run the server locally
+** Local Development
+   To run the server locally, first install dependencies
+
+   #+begin_src sh
+     yarn install
+   #+end_src
+   
+   To run the server for use in another application
 
    #+begin_src sh
      yarn frontend
@@ -18,3 +24,25 @@
    To set the server to a different port, set the environment variable ~ENV~ to
    the desired number. This can be done using your operating systems method of
    choice, or by using a ~.env~ file in the project's root.
+
+   For development, the staging postgres database needs to be configured. It's
+   connection is supplied via the ~DATABASE_URL~ environment variable. To migrate
+   and seed the database
+
+   #+begin_src sh
+     npx knex migrate:latest --env staging && npx knex seed:run --env staging
+   #+end_src
+   
+   To run the server
+   
+   #+begin_src sh
+     yarn server
+   #+end_src
+   
+   Tests may also be ran via
+
+   #+begin_src sh
+     yarn test-staging
+   #+end_src
+   
+   Note that this will rollback and reapply migrations, as well as reseed the database.
