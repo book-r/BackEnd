@@ -117,6 +117,27 @@ exports.up = function(knex, Promise) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE');
       tbl.unique(['user_id', 'book_id'], 'unique_review_per_book');
+    })
+    .createTable('roles', tbl => {
+      tbl.increments();
+      tbl.string('name');
+    })
+    .createTable('users_roles', tbl => {
+      tbl.increments();
+      tbl
+        .integer('user_id')
+        .notNullable()
+        .references('id')
+        .inTable('users')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
+      tbl
+        .integer('role_id')
+        .notNullable()
+        .references('id')
+        .inTable('roles')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE');
     });
   ;
 };
@@ -127,6 +148,8 @@ exports.down = function(knex, Promise) {
     .dropTableIfExists('books_subjects')
     .dropTableIfExists('authors')
     .dropTableIfExists('reviews')
+    .dropTableIfExists('users_roles')
+    .dropTableIfExists('roles')
     .dropTableIfExists('users')
     .dropTableIfExists('subjects')
     .dropTableIfExists('books')
